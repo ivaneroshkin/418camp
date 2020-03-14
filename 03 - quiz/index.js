@@ -16,23 +16,28 @@ function getFiveRandomQuestion(array) {
   return array.sort(() => Math.random() - 0.5).slice(0, 5);
 }
 
+function getInfoFromFile(file) {
+  const data = fs.readFileSync(file, 'utf8');
+  let dataArrayFromFile = data.split('\n');
+  const currentQuestion = dataArrayFromFile[0];
+  const correctAnswer = dataArrayFromFile[1];
+  const answerArray = dataArrayFromFile.slice(2, dataArrayFromFile.length);
+  return { currentQuestion, correctAnswer, answerArray };
+}
+
 function getQuestion(gameArray) {
   let counter = 0;
   gameArray.forEach(file => {
-    const data = fs.readFileSync(file, 'utf8');
-    let dataArrayFromFile = data.split('\n');
-    const currentQuestion = dataArrayFromFile[0];
-    const correctAnswer = dataArrayFromFile[1];
-    const answerArray = dataArrayFromFile.slice(2, dataArrayFromFile.length);
+    const question = getInfoFromFile(file);
     console.log(`Внимание вопрос:
-      ${currentQuestion}
+      ${question.currentQuestion}
       `);
-    let index = readlineSync.keyInSelect(answerArray, `Ваш ответ:`);
+    let index = readlineSync.keyInSelect(question.answerArray, `Ваш ответ:`);
     if (index < 0) {
       console.log(`Последняя возможность дать ответ`);
-      index = readlineSync.keyInSelect(answerArray, `Ваш ответ:`);
+      index = readlineSync.keyInSelect(question.answerArray, `Ваш ответ:`);
     }
-    if (Number(correctAnswer) === index + 1) {
+    if (Number(question.correctAnswer) === index + 1) {
       counter++;
     }
   });

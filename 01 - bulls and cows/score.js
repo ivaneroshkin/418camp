@@ -8,5 +8,7 @@ function finalScore(moves) {
   console.log(`Поздравляем! Вы выиграли! Ходов понадобилось: ${moves}`);
 }
 
-exports.attemptScore = attemptScore;
-exports.finalScore = finalScore;
+module.exports = {
+  attemptScore,
+  finalScore
+};

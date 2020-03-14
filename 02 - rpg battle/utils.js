@@ -75,12 +75,14 @@ function sayAboutChoose(name, move) {
   console.log(`${name} выбирает ход: ${move.toLocaleUpperCase()}`);
 }
 
-exports.getRandomNumber = getRandomNumber;
-exports.difficultyArray = difficultyArray;
-exports.setLevel = setLevel;
-exports.roundHealth = roundHealth;
-exports.dropCooldowns = dropCooldowns;
-exports.displayMoveChars = displayMoveChars;
-exports.endRoundStats = endRoundStats;
-exports.requireChooseMove = requireChooseMove;
-exports.sayAboutChoose = sayAboutChoose;
+module.exports = {
+  getRandomNumber,
+  difficultyArray,
+  setLevel,
+  roundHealth,
+  dropCooldowns,
+  displayMoveChars,
+  endRoundStats,
+  requireChooseMove,
+  sayAboutChoose
+};

@@ -10,5 +10,7 @@ function getRandomNumber(numberLenght) {
   return digits.slice(0, numberLenght);
 }
 
-exports.checkDuplicates = checkDuplicates;
-exports.getRandomNumber = getRandomNumber;
+module.exports = {
+  checkDuplicates,
+  getRandomNumber
+};
