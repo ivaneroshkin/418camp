@@ -10,6 +10,9 @@
   },
   "author": "@ivaneroshkin",
   "license": "ISC",
+  "engines": {
+    "node": ">=12.16.0"
+  },
   "dependencies": {
     "cucumber": "^6.0.5",
     "readline-sync": "^1.4.10"
