@@ -58,3 +58,8 @@ Then('победил игрок {int}', (int) => {
   }
   assert.equal(int, winner);
 });
+
+Then('ничья', () => {
+  const isGameFinished = checkMoveResult(initialField);
+  assert.equal('deadHeat', isGameFinished);
+});
