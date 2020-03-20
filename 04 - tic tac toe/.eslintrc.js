@@ -14,6 +14,10 @@ module.exports = {
     ecmaVersion: 2018
   },
   rules: {
-    'no-console': 'off'
+    'no-console': 'off',
+    'comma-dangle': ['error', 'never'],
+    'no-constant-condition': ['error', { checkLoops: false }],
+    'no-continue': 'off',
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }]
   }
 };
