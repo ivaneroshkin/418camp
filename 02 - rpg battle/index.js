@@ -14,8 +14,8 @@ const {
 } = require('./utils');
 
 // initial config
-const nameMonster = `Монстр`;
-const wizardName = `Евстафий`;
+const nameMonster = `Monster`;
+const wizardName = `Eustace`;
 let enemyHealth = monster.maxHealth;
 let enemyAllMoves = monster.moves.length;
 let playerHealth;
@@ -26,20 +26,20 @@ const wizardCooldowns = {};
 game();
 
 function game() {
-  console.log(`Добро пожаловать в игру RPG баттл!`);
+  console.log(`Welcome to RPG Battle!`);
   let difficultyGame = readlineSync.keyInSelect(
     difficultyArray,
-    `Выберите сложность игры:`
+    `Choose game difficulty:`
   );
   if (difficultyGame < 0) {
-    console.log(`Нет пути назад...`);
+    console.log(`There's no turning back...`);
   }
   playerHealth = setLevel(difficultyArray[difficultyGame]);
 
   let moveSwitcher = 0;
 
   while (true) {
-    console.log(`Новый раунд`);
+    console.log(`New round`);
 
     let roundMonsterMove;
     let roundWizardMove;
@@ -58,16 +58,16 @@ function game() {
     endRoundStats(enemyHealth, playerHealth);
 
     if (enemyHealth <= 0 && playerHealth <= 0) {
-      console.log(`Все погибли на поле`);
+      console.log(`Everyone perished on the battlefield`);
       return;
     }
     if (enemyHealth <= 0) {
-      console.log(`Противник повержен! Вы выиграли игру`);
+      console.log(`Enemy defeated! You won the game`);
       return;
     }
     if (playerHealth <= 0) {
       console.log(`YOU DIED!
-      ${wizardName} пал смертью храбрых...
+      ${wizardName} fell a hero's death...
       `);
       return;
     }
@@ -101,7 +101,7 @@ function wizardMove() {
     });
     let currentWizardMove = readlineSync.keyInSelect(
       availableWizardMoves,
-      `Какой удар выберет Боевой маг?`
+      `Which move will the Battle Mage choose?`
     );
     if (currentWizardMove < 0) {
       requireChooseMove();
@@ -109,9 +109,9 @@ function wizardMove() {
     }
     if (wizardCooldowns[availableWizardMoves[currentWizardMove]] > 0) {
       console.log(
-        `${wizardName} еще не восстановил этот удар. Удар будет доступен через ${
+        `${wizardName} hasn't recovered this move yet. Move will be available in ${
           wizardCooldowns[availableWizardMoves[currentWizardMove]]
-        } ходов`
+        } turns`
       );
       continue;
     }
@@ -122,8 +122,8 @@ function wizardMove() {
         displayMoveChars(elem);
       }
     });
-    if (readlineSync.keyInYN(`Выбор сделан?`)) {
-      console.log(`ДА`);
+    if (readlineSync.keyInYN(`Confirm choice?`)) {
+      console.log(`YES`);
       let result;
       wizard.moves.forEach(elem => {
         if (elem.name === availableWizardMoves[currentWizardMove]) {

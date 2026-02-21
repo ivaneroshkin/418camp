@@ -2,18 +2,18 @@
 
 const monster = {
   maxHealth: 10,
-  name: 'Лютый',
+  name: 'Fierce',
   moves: [
     {
-      name: 'Удар когтистой лапой',
-      physicalDmg: 3, // физический урон
-      magicDmg: 0, // магический урон
-      physicArmorPercents: 20, // физическая броня
-      magicArmorPercents: 20, // магическая броня
-      cooldown: 0 // ходов на восстановление
+      name: 'Clawed Paw Strike',
+      physicalDmg: 3, // physical damage
+      magicDmg: 0, // magic damage
+      physicArmorPercents: 20, // physical armor
+      magicArmorPercents: 20, // magic armor
+      cooldown: 0 // turns to recover
     },
     {
-      name: 'Огненное дыхание',
+      name: 'Fire Breath',
       physicalDmg: 0,
       magicDmg: 4,
       physicArmorPercents: 0,
@@ -21,7 +21,7 @@ const monster = {
       cooldown: 3
     },
     {
-      name: 'Удар хвостом',
+      name: 'Tail Strike',
       physicalDmg: 2,
       magicDmg: 0,
       physicArmorPercents: 50,

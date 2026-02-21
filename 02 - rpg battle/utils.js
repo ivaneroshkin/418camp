@@ -1,20 +1,20 @@
 // scalable config
 
-const difficultyArray = ['Легкий', 'Средний', 'Сложный', 'Кошмар'];
+const difficultyArray = ['Easy', 'Medium', 'Hard', 'Nightmare'];
 
 function setLevel(answer) {
   let result;
   switch (answer) {
-    case 'Легкий':
+    case 'Easy':
       result = 20;
       break;
-    case 'Средний':
+    case 'Medium':
       result = 15;
       break;
-    case 'Сложный':
+    case 'Hard':
       result = 10;
       break;
-    case 'Кошмар':
+    case 'Nightmare':
       result = 7;
       break;
     default:
@@ -52,27 +52,27 @@ function dropCooldowns(cooldowns) {
 
 function displayMoveChars(obj) {
   console.log(`
-  Физический урон: ${obj.physicalDmg}
-  Магический урон: ${obj.magicDmg}
-  Физическая броня: ${obj.physicArmorPercents}
-  Магическая броня: ${obj.magicArmorPercents}
-  Ходов на восстановление: ${obj.cooldown}
+  Physical damage: ${obj.physicalDmg}
+  Magic damage: ${obj.magicDmg}
+  Physical armor: ${obj.physicArmorPercents}
+  Magic armor: ${obj.magicArmorPercents}
+  Turns to recover: ${obj.cooldown}
 `);
 }
 
 function endRoundStats(enemyHealth, playerHealth) {
-  console.log(`Конец раунда!
-    Здоровье монстра: ${enemyHealth.toFixed(1)}
-    Здоровье мага: ${playerHealth.toFixed(1)}
+  console.log(`End of round!
+    Monster health: ${enemyHealth.toFixed(1)}
+    Mage health: ${playerHealth.toFixed(1)}
   `);
 }
 
 function requireChooseMove() {
-  console.log(`Необходимо выбрать удар!`);
+  console.log(`You must choose a move!`);
 }
 
 function sayAboutChoose(name, move) {
-  console.log(`${name} выбирает ход: ${move.toLocaleUpperCase()}`);
+  console.log(`${name} chooses move: ${move.toLocaleUpperCase()}`);
 }
 
 module.exports = {
