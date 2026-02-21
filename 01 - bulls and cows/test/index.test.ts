@@ -196,4 +196,26 @@ describe('startGame', () => {
       expect(!(Number(6) < 3 || Number(6) > 6)).toBe(true);
     });
   });
+
+  describe('quit functionality', () => {
+    it('should exit gracefully when user types "q" at difficulty prompt', () => {
+      questionSpy.mockImplementationOnce(() => 'q');
+
+      startGame();
+
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Thanks for playing! Goodbye!')
+      );
+    });
+
+    it('should exit gracefully when user types "quit" at difficulty prompt', () => {
+      questionSpy.mockImplementationOnce(() => 'quit');
+
+      startGame();
+
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Thanks for playing! Goodbye!')
+      );
+    });
+  });
 });

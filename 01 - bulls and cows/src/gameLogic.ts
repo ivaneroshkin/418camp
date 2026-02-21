@@ -8,7 +8,7 @@ export interface AttemptResult {
   cows: number;
 }
 
-export function bullsAndCows(numberLength: number): void {
+export function bullsAndCows(numberLength: number): boolean {
   const numberInGame = utils.getRandomNumber(numberLength);
   console.log(`The secret number contains ${numberLength} digits`);
   let moves = 0;
@@ -16,12 +16,17 @@ export function bullsAndCows(numberLength: number): void {
   while (true) {
     moves++;
     let attempt = getAttempt(moves, numberLength);
+    
+    if (attempt === null) {
+      console.log(styleText(['yellow'], `Game ended. Thanks for playing!`));
+      return false;
+    }
+    
     let result = attemptResult(numberInGame, attempt);
 
     if (result.bulls == numberLength) {
       score.finalScore(moves);
-      console.log(styleText(['green', 'bold'], `Continue? (To quit the game: CTRL+C)`));
-      return;
+      return true;
     }
     score.attemptScore(result.bulls, result.cows);
   }
@@ -42,11 +47,15 @@ export function attemptResult(numberInGame: number[], attempt: string[]): Attemp
   return result;
 }
 
-export function getAttempt(moves: number, numberLength: number): string[] {
+export function getAttempt(moves: number, numberLength: number): string[] | null {
   while (true) {
     console.log(`Attempt number ${moves}`);
-    let attempt = readlineSync.question(`Enter a number: `);
+    let attempt = readlineSync.question(`Enter a number (or 'q' to quit): `);
     const attemptString = String(attempt).trim();
+    
+    if (attemptString.toLowerCase() === 'q' || attemptString.toLowerCase() === 'quit') {
+      return null;
+    }
     
     if (!utils.isDigitsOnly(attemptString)) {
       console.log(styleText(['bgRed'], `Please enter digits only!`));
