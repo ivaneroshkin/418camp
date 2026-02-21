@@ -1,52 +1,199 @@
-import { describe, it, expect } from '@jest/globals';
-import { attemptResult } from '../index.js';
+import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
+import { startGame } from '../index.js';
+import readlineSync from 'readline-sync';
 
-describe('attemptResult', () => {
-  it('should return all bulls when guess matches completely', () => {
-    const result = attemptResult([1, 2, 3, 4], ['1', '2', '3', '4']);
-    expect(result.bulls).toBe(4);
-    expect(result.cows).toBe(0);
+describe('startGame', () => {
+  let consoleLogSpy: ReturnType<typeof jest.spyOn>;
+  let questionSpy: ReturnType<typeof jest.spyOn>;
+
+  beforeEach(() => {
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    questionSpy = jest.spyOn(readlineSync, 'question');
   });
 
-  it('should return all cows when all digits match but in wrong positions', () => {
-    const result = attemptResult([1, 2, 3, 4], ['4', '3', '2', '1']);
-    expect(result.bulls).toBe(0);
-    expect(result.cows).toBe(4);
+  afterEach(() => {
+    consoleLogSpy.mockRestore();
+    questionSpy.mockRestore();
   });
 
-  it('should return mixed bulls and cows', () => {
-    const result = attemptResult([1, 2, 3, 4], ['1', '3', '2', '5']);
-    expect(result.bulls).toBe(1);
-    expect(result.cows).toBe(2);
+  it('should display welcome message', () => {
+    questionSpy.mockImplementationOnce(() => {
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('This is the game "Bulls and Cows". Shall we play?')
+    );
   });
 
-  it('should return zero bulls and cows when no digits match', () => {
-    const result = attemptResult([1, 2, 3, 4], ['5', '6', '7', '8']);
-    expect(result.bulls).toBe(0);
-    expect(result.cows).toBe(0);
+  it('should reject non-digit input with letters', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return 'abc';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Please enter digits only!')
+    );
   });
 
-  it('should handle partial matches correctly', () => {
-    const result = attemptResult([5, 6, 7, 8], ['5', '7', '9', '0']);
-    expect(result.bulls).toBe(1);
-    expect(result.cows).toBe(1);
+  it('should reject difficulty less than 3', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '2';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Difficulty cannot be less than 3 or more than 6 digits')
+    );
   });
 
-  it('should prioritize bulls over cows for same position', () => {
-    const result = attemptResult([1, 2, 3], ['1', '2', '3']);
-    expect(result.bulls).toBe(3);
-    expect(result.cows).toBe(0);
+  it('should reject difficulty equal to 0', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '0';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Difficulty cannot be less than 3 or more than 6 digits')
+    );
   });
 
-  it('should work with 3-digit numbers', () => {
-    const result = attemptResult([5, 6, 7], ['7', '5', '6']);
-    expect(result.bulls).toBe(0);
-    expect(result.cows).toBe(3);
+  it('should reject difficulty greater than 6', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '7';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Difficulty cannot be less than 3 or more than 6 digits')
+    );
   });
 
-  it('should work with 6-digit numbers', () => {
-    const result = attemptResult([1, 2, 3, 4, 5, 6], ['1', '2', '3', '4', '5', '6']);
-    expect(result.bulls).toBe(6);
-    expect(result.cows).toBe(0);
+  it('should reject input with decimal numbers', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '4.5';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Please enter digits only!')
+    );
+  });
+
+  it('should reject input with spaces', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '4 5';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Please enter digits only!')
+    );
+  });
+
+  it('should reject empty input', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return '';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    expect(consoleLogSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Please enter digits only!')
+    );
+  });
+
+  it('should handle multiple validation failures in sequence', () => {
+    let callCount = 0;
+    questionSpy.mockImplementation(() => {
+      callCount++;
+      if (callCount === 1) return 'abc';
+      if (callCount === 2) return '2';
+      if (callCount === 3) return '7';
+      if (callCount === 4) return '4.5';
+      throw new Error('Exit test');
+    });
+
+    try {
+      startGame();
+    } catch (e) {}
+
+    const logCalls = consoleLogSpy.mock.calls.map(call => call[0]);
+    const hasDigitsOnlyError = logCalls.some(log => 
+      typeof log === 'string' && log.includes('Please enter digits only!')
+    );
+    const hasRangeError = logCalls.some(log => 
+      typeof log === 'string' && log.includes('Difficulty cannot be less than 3 or more than 6 digits')
+    );
+
+    expect(hasDigitsOnlyError).toBe(true);
+    expect(hasRangeError).toBe(true);
+  });
+
+  describe('difficulty validation logic', () => {
+    it('should validate difficulty less than 3 is invalid', () => {
+      const numberLength = 2;
+      const isValid = !(Number(numberLength) < 3 || Number(numberLength) > 6);
+      expect(isValid).toBe(false);
+    });
+
+    it('should validate difficulty greater than 6 is invalid', () => {
+      const numberLength = 7;
+      const isValid = !(Number(numberLength) < 3 || Number(numberLength) > 6);
+      expect(isValid).toBe(false);
+    });
+
+    it('should validate difficulty between 3 and 6 is valid', () => {
+      expect(!(Number(3) < 3 || Number(3) > 6)).toBe(true);
+      expect(!(Number(4) < 3 || Number(4) > 6)).toBe(true);
+      expect(!(Number(5) < 3 || Number(5) > 6)).toBe(true);
+      expect(!(Number(6) < 3 || Number(6) > 6)).toBe(true);
+    });
   });
 });

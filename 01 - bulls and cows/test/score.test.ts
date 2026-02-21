@@ -1,5 +1,5 @@
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
-import { attemptScore, finalScore } from '../score.js';
+import { attemptScore, finalScore } from '../src/score.js';
 
 describe('score', () => {
   let consoleLogSpy: ReturnType<typeof jest.spyOn>;
