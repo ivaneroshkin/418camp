@@ -1,18 +1,18 @@
-# Проект 1. Быки и коровы
+# Project 1. Bulls and Cows
 
-Компьютер загадывает число из нескольких различающихся цифр (от 3 до 6). Игроку дается несколько попыток на то, чтобы угадать это число.
+The computer generates a number consisting of several unique digits (from 3 to 6). The player is given several attempts to guess this number.
 
-После каждой попытки компьютер сообщает количество совпавших цифр стоящих не на своих местах, а также количество правильных цифр на своих местах.
+After each attempt, the computer reports the number of matching digits in wrong positions, as well as the number of correct digits in their correct positions.
 
-Например загаданное число: 56478 предположение игрока: 52976
+For example, the secret number: 56478, player's guess: 52976
 
-Ответ: совпавших цифр не на своих местах - 1 (6), цифр на своих местах - 2 (5 и 7)
+Answer: digits in wrong positions - 1 (6), digits in correct positions - 2 (5 and 7)
 
-Игра ведется до окончания количества ходов либо до отгадывания
+The game continues until the number of turns runs out or until the number is guessed.
 
-Кстати, в Fallout 3, Fallout New Vegas и Fallout 4 для взлома терминалов используется очень похожая мини игра.
+By the way, in Fallout 3, Fallout New Vegas, and Fallout 4, a very similar mini-game is used for hacking terminals.
 
-## Запуск игры
+## Running the Game
 
 ```sh
 npm i
