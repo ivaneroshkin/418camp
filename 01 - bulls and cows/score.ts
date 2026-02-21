@@ -1,14 +1,9 @@
-function attemptScore(bulls, cows) {
+export function attemptScore(bulls: number, cows: number): void {
   console.log(
     `Digits in wrong positions - ${cows}, digits in correct positions - ${bulls}`
   );
 }
 
-function finalScore(moves) {
+export function finalScore(moves: number): void {
   console.log(`Congratulations! You won! Moves needed: ${moves}`);
 }
-
-module.exports = {
-  attemptScore,
-  finalScore
-};
