@@ -3,9 +3,16 @@ import { styleText } from 'node:util';
 import * as utils from './utils.js';
 import * as score from './score.js';
 
-startGame();
+interface AttemptResult {
+  bulls: number;
+  cows: number;
+}
 
-function startGame(): void {
+if (process.env.NODE_ENV !== 'test') {
+  startGame();
+}
+
+export function startGame(): void {
   console.log(styleText(['green', 'bold'], `This is the game "Bulls and Cows". Shall we play?`));
   while (true) {
     let numberLength = readlineSync.question(
@@ -19,12 +26,7 @@ function startGame(): void {
   }
 }
 
-interface AttemptResult {
-  bulls: number;
-  cows: number;
-}
-
-function bullsAndCows(numberLength: number): void {
+export function bullsAndCows(numberLength: number): void {
   const numberInGame = utils.getRandomNumber(numberLength);
   console.log(`The secret number contains ${numberLength} digits`);
   let moves = 0;
@@ -43,7 +45,7 @@ function bullsAndCows(numberLength: number): void {
   }
 }
 
-function attemptResult(numberInGame: number[], attempt: string[]): AttemptResult {
+export function attemptResult(numberInGame: number[], attempt: string[]): AttemptResult {
   const result: AttemptResult = { bulls: 0, cows: 0 };
 
   const attemptString = attempt.join('');
@@ -58,7 +60,7 @@ function attemptResult(numberInGame: number[], attempt: string[]): AttemptResult
   return result;
 }
 
-function getAttempt(moves: number, numberLength: number): string[] {
+export function getAttempt(moves: number, numberLength: number): string[] {
   while (true) {
     console.log(`Attempt number ${moves}`);
     let attempt = readlineSync.question(`Enter a number: `);
