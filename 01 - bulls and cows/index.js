@@ -5,13 +5,13 @@ const score = require('./score');
 startGame();
 
 function startGame() {
-  console.log(`Это игра «Быки и коровы». Сыграем?`);
+  console.log(`This is the game "Bulls and Cows". Shall we play?`);
   while (true) {
     let numberLenght = readlineSync.question(
-      `Выбери сложность (от 3 до 6 цифр): `
+      `Choose difficulty (from 3 to 6 digits): `
     );
     if (Number(numberLenght) < 3 || Number(numberLenght) > 6) {
-      console.log(`Сложность не может быть меньше 3 или больше 6 цифр`);
+      console.log(`Difficulty cannot be less than 3 or more than 6 digits`);
       continue;
     }
     bullsAndCows(numberLenght);
@@ -20,7 +20,7 @@ function startGame() {
 
 function bullsAndCows(numberLenght) {
   const numberInGame = utils.getRandomNumber(numberLenght);
-  console.log(`Секретное число содержит ${numberLenght} цифр`);
+  console.log(`The secret number contains ${numberLenght} digits`);
   let moves = 0;
 
   while (true) {
@@ -30,7 +30,7 @@ function bullsAndCows(numberLenght) {
 
     if (result.bulls == numberLenght) {
       score.finalScore(moves);
-      console.log(`Продолжаем? (Завершить игру: CTRL+C)`);
+      console.log(`Continue? (To quit the game: CTRL+C)`);
       return;
     }
     score.attemptScore(result.bulls, result.cows);
@@ -54,16 +54,16 @@ function attemptResult(numberInGame, attempt) {
 
 function getAttempt(moves, numberLenght) {
   while (true) {
-    console.log(`Попытка номер ${moves}`);
-    let attempt = readlineSync.question(`Введи число: `);
+    console.log(`Attempt number ${moves}`);
+      let attempt = readlineSync.question(`Enter a number: `);
     attempt = String(attempt).split('');
 
     if (attempt.length != numberLenght) {
-      console.log(`Введи число из ${numberLenght} цифр`);
+      console.log(`Enter a number from ${numberLenght} digits`);
       continue;
     }
     if (utils.checkDuplicates(attempt)) {
-      console.log(`Цифры не должны повторяться!`);
+      console.log(`Digits must not be repeated!`);
       continue;
     }
     return attempt;

@@ -1,11 +1,11 @@
 function attemptScore(bulls, cows) {
   console.log(
-    `Cовпавших цифр не на своих местах - ${cows}, цифр на своих местах - ${bulls}`
+    `Digits in wrong positions - ${cows}, digits in correct positions - ${bulls}`
   );
 }
 
 function finalScore(moves) {
-  console.log(`Поздравляем! Вы выиграли! Ходов понадобилось: ${moves}`);
+  console.log(`Congratulations! You won! Moves needed: ${moves}`);
 }
 
 module.exports = {
