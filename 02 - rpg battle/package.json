@@ -2,14 +2,25 @@
   "name": "rpg-battle",
   "version": "1.0.0",
   "description": "Боевой маг Евстафий сражается с лютым монстром. Монстр описывается таким объектом:",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "@ivaneroshkin",
   "license": "ISC",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "dependencies": {
     "readline-sync": "^1.4.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/readline-sync": "^1.4.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
