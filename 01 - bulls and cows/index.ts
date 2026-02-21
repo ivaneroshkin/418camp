@@ -2,12 +2,14 @@ import readlineSync from 'readline-sync';
 import { styleText } from 'node:util';
 import * as utils from './src/utils.js';
 import { bullsAndCows } from './src/gameLogic.js';
+import { displayTitleScreen } from './src/logo.js';
 
 if (process.env.NODE_ENV !== 'test') {
   startGame();
 }
 
 export function startGame(): void {
+  displayTitleScreen();
   console.log(styleText(['green', 'bold'], `This is the game "Bulls and Cows". Shall we play?`));
   while (true) {
     let numberLength = readlineSync.question(
