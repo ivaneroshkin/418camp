@@ -1,7 +1,7 @@
 {
   "name": "rpg-battle",
-  "version": "1.0.0",
-  "description": "Боевой маг Евстафий сражается с лютым монстром. Монстр описывается таким объектом:",
+  "version": "2.0.0",
+  "description": "CLI game \"RPG Battle\"",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
