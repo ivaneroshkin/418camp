@@ -1,4 +1,4 @@
-import readlineSync from 'readline-sync';
+import rl from './readline.js';
 import { styleText } from 'node:util';
 import * as utils from './utils.js';
 import * as score from './score.js';
@@ -8,14 +8,14 @@ export interface AttemptResult {
   cows: number;
 }
 
-export function bullsAndCows(numberLength: number): boolean {
+export async function bullsAndCows(numberLength: number): Promise<boolean> {
   const numberInGame = utils.getRandomNumber(numberLength);
   console.log(`The secret number contains ${numberLength} digits`);
   let moves = 0;
 
   while (true) {
     moves++;
-    let attempt = getAttempt(moves, numberLength);
+    let attempt = await getAttempt(moves, numberLength);
     
     if (attempt === null) {
       console.log(styleText(['yellow'], `Game ended. Thanks for playing!`));
@@ -47,10 +47,10 @@ export function attemptResult(numberInGame: number[], attempt: string[]): Attemp
   return result;
 }
 
-export function getAttempt(moves: number, numberLength: number): string[] | null {
+export async function getAttempt(moves: number, numberLength: number): Promise<string[] | null> {
   while (true) {
     console.log(`Attempt number ${moves}`);
-    let attempt = readlineSync.question(`Enter a number (or 'q' to quit): `);
+    let attempt = await rl.question(`Enter a number (or 'q' to quit): `);
     const attemptString = String(attempt).trim();
     
     if (attemptString.toLowerCase() === 'q' || attemptString.toLowerCase() === 'quit') {

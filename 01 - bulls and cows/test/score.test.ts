@@ -5,7 +5,7 @@ describe('score', () => {
   let consoleLogSpy: ReturnType<typeof jest.spyOn>;
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
   });
 
   afterEach(() => {

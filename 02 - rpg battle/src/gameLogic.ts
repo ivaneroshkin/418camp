@@ -1,5 +1,6 @@
 import { styleText } from 'node:util';
-import * as readlineSync from 'readline-sync';
+import * as readline from 'node:readline/promises';
+import { stdin as input, stdout as output } from 'node:process';
 import { monster } from './monster';
 import { wizard } from './wizard';
 import {
@@ -19,6 +20,32 @@ const nameMonster = `Monster`;
 const wizardName = `Eustace`;
 const enemyAllMoves = monster.moves.length;
 
+const rl = readline.createInterface({ input, output });
+
+async function keyInYN(prompt: string): Promise<boolean> {
+  const answer = await rl.question(`${prompt} [y/n]: `);
+  return answer.toLowerCase() === 'y';
+}
+
+async function keyInSelect(items: string[], prompt: string, options?: { cancel?: string }): Promise<number> {
+  console.log(prompt);
+  items.forEach((item, index) => {
+    console.log(`[${index + 1}] ${item}`);
+  });
+  if (options?.cancel) {
+    console.log(`[0] ${options.cancel}`);
+  }
+  
+  const answer = await rl.question('Select: ');
+  const selection = parseInt(answer, 10);
+  
+  if (isNaN(selection) || selection < 0 || selection > items.length) {
+    return -1;
+  }
+  
+  return selection - 1;
+}
+
 function resetGameState() {
   return {
     enemyHealth: monster.maxHealth,
@@ -28,9 +55,9 @@ function resetGameState() {
   };
 }
 
-export function game(): void {
+export async function game(): Promise<void> {
   while (true) {
-    const gameResult = playGame();
+    const gameResult = await playGame();
     
     if (gameResult === 'quit') {
       console.log(styleText('yellow', `Thanks for playing!`));
@@ -38,17 +65,18 @@ export function game(): void {
     }
     
     console.log('');
-    if (!readlineSync.keyInYN('Play again?')) {
+    if (!await keyInYN('Play again?')) {
       console.log(styleText('yellow', `Thanks for playing!`));
       break;
     }
     console.log('');
   }
+  rl.close();
 }
 
-function playGame(): 'quit' | 'finished' {
+async function playGame(): Promise<'quit' | 'finished'> {
   console.log(styleText('green', `Welcome to RPG Battle!`));
-  const difficultyGame = readlineSync.keyInSelect(
+  const difficultyGame = await keyInSelect(
     difficultyArray,
     `Choose game difficulty:`
   );
@@ -69,9 +97,9 @@ function playGame(): 'quit' | 'finished' {
 
     if (!moveSwitcher) {
       roundMonsterMove = monsterMove(gameState.monsterCooldowns);
-      roundWizardMove = wizardMove(gameState.wizardCooldowns);
+      roundWizardMove = await wizardMove(gameState.wizardCooldowns);
     } else {
-      roundWizardMove = wizardMove(gameState.wizardCooldowns);
+      roundWizardMove = await wizardMove(gameState.wizardCooldowns);
       if (roundWizardMove === 'quit') {
         return 'quit';
       }
@@ -124,19 +152,19 @@ function monsterMove(monsterCooldowns: Cooldowns): Move {
   }
 }
 
-function wizardMove(wizardCooldowns: Cooldowns): Move | 'quit' {
+async function wizardMove(wizardCooldowns: Cooldowns): Promise<Move | 'quit'> {
   while (true) {
     const availableWizardMoves = wizard.moves.map(elem => {
       return elem.name;
     });
     
-    const currentWizardMove = readlineSync.keyInSelect(
+    const currentWizardMove = await keyInSelect(
       availableWizardMoves,
       `Which move will the Battle Mage choose?`,
       { cancel: 'Cancel and quit' }
     );
     if (currentWizardMove < 0) {
-      if (readlineSync.keyInYN('Are you sure you want to quit?')) {
+      if (await keyInYN('Are you sure you want to quit?')) {
         return 'quit';
       }
       continue;
@@ -157,7 +185,7 @@ function wizardMove(wizardCooldowns: Cooldowns): Move | 'quit' {
         displayMoveChars(elem);
       }
     });
-    if (readlineSync.keyInYN(`Confirm choice?`)) {
+    if (await keyInYN(`Confirm choice?`)) {
       console.log(styleText('magenta', `...`));
       let result: Move | undefined;
       wizard.moves.forEach(elem => {

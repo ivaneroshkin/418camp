@@ -1,18 +1,18 @@
-import readlineSync from 'readline-sync';
+import rl from './src/readline.js';
 import { styleText } from 'node:util';
 import * as utils from './src/utils.js';
 import { bullsAndCows } from './src/gameLogic.js';
 import { displayTitleScreen } from './src/logo.js';
 
 if (process.env.NODE_ENV !== 'test') {
-  startGame();
+  startGame().catch(console.error);
 }
 
-export function startGame(): void {
+export async function startGame(): Promise<void> {
   displayTitleScreen();
   console.log(styleText(['green', 'bold'], `This is the game "Bulls and Cows". Shall we play?`));
   while (true) {
-    let numberLength = readlineSync.question(
+    let numberLength = await rl.question(
       `Choose difficulty (from 3 to 6 digits, or 'q' to quit): `
     );
     
@@ -20,6 +20,7 @@ export function startGame(): void {
     
     if (numberLengthTrimmed.toLowerCase() === 'q' || numberLengthTrimmed.toLowerCase() === 'quit') {
       console.log(styleText(['green'], `Thanks for playing! Goodbye!`));
+      rl.close();
       break;
     }
     
@@ -34,15 +35,17 @@ export function startGame(): void {
       continue;
     }
     
-    const gameCompleted = bullsAndCows(difficultyLevel);
+    const gameCompleted = await bullsAndCows(difficultyLevel);
     
     if (gameCompleted) {
-      const playAgain = readlineSync.question(`Play again? (y/n): `);
+      const playAgain = await rl.question(`Play again? (y/n): `);
       if (playAgain.toLowerCase() !== 'y' && playAgain.toLowerCase() !== 'yes') {
         console.log(styleText(['green'], `Thanks for playing! Goodbye!`));
+        rl.close();
         break;
       }
     } else {
+      rl.close();
       break;
     }
   }

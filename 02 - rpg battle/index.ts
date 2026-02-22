@@ -1,3 +1,3 @@
 import { game } from './src/gameLogic';
 
-game();
+game().catch(console.error);
