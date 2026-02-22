@@ -15,6 +15,7 @@ import {
   sayAboutChoose
 } from './utils';
 import { Move, Cooldowns } from './types';
+import { titleScreen } from './titleScreen';
 
 const nameMonster = `Monster`;
 const wizardName = `Eustace`;
@@ -75,6 +76,7 @@ export async function game(): Promise<void> {
 }
 
 async function playGame(): Promise<'quit' | 'finished'> {
+  titleScreen();
   console.log(styleText('green', `Welcome to RPG Battle!`));
   const difficultyGame = await keyInSelect(
     difficultyArray,
