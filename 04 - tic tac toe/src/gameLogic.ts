@@ -1,32 +1,35 @@
-const {
+import {
   displayFieldAsString,
   playerMove,
   getSwitch,
   getCell,
-  checkMoveResult
-} = require('./utils');
+  checkMoveResult,
+  type GameField,
+  type Player
+} from './utils.js';
 
-const {
+import {
   eventStartGame,
   eventPlayerMove,
   eventPlayerWin,
   eventBusyCell,
   eventDeadHeat
-} = require('./events');
+} from './events.js';
 
-const initialField = [
+const initialField: GameField = [
   [0, 0, 0],
   [0, 0, 0],
   [0, 0, 0]
 ];
 
-function main() {
+export async function main(): Promise<void> {
   eventStartGame();
-  let playerSwitcher = 1;
+  let playerSwitcher: Player = 1;
+  
   while (true) {
     eventPlayerMove(playerSwitcher);
     const fieldSnapshot = JSON.parse(JSON.stringify(initialField));
-    const [verticalCell, horizontalCell] = playerMove();
+    const [verticalCell, horizontalCell] = await playerMove();
 
     eventPlayerMove(playerSwitcher);
     getCell(verticalCell, horizontalCell, initialField, playerSwitcher);
@@ -51,5 +54,3 @@ function main() {
     playerSwitcher = getSwitch(playerSwitcher);
   }
 }
-
-main();
