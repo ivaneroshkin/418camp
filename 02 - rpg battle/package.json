@@ -25,6 +25,7 @@
   "overrides": {
     "glob": "^13.0.0",
     "minimatch": "^10.0.0",
-    "inflight": "npm:@humanfs/inflight@^1.0.0"
+    "inflight": "npm:@humanfs/inflight@^1.0.0",
+    "test-exclude": "^7.0.1"
   }
 }
