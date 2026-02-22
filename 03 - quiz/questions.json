@@ -1,0 +1,112 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "In what year was George Orwell's dystopian novel \"1984\" written?",
+      "correctAnswer": 2,
+      "answers": [
+        "1984",
+        "1948",
+        "1956",
+        "1982",
+        "1928"
+      ]
+    },
+    {
+      "id": 2,
+      "question": "Which US president wrote his own story about Sherlock Holmes?",
+      "correctAnswer": 2,
+      "answers": [
+        "John Kennedy",
+        "Franklin Roosevelt",
+        "Ronald Reagan"
+      ]
+    },
+    {
+      "id": 3,
+      "question": "What tax was introduced in 12th century England to force men to go to war?",
+      "correctAnswer": 3,
+      "answers": [
+        "Tax on idleness",
+        "Tax on lack of boots",
+        "Tax on cowardice"
+      ]
+    },
+    {
+      "id": 4,
+      "question": "Where did the expression \"money doesn't smell\" come from?",
+      "correctAnswer": 3,
+      "answers": [
+        "From fees for transporting perfumes",
+        "From charges for unwashed socks",
+        "From tax on toilets"
+      ]
+    },
+    {
+      "id": 5,
+      "question": "Tourists arriving in Mallorca are required to pay a tax on...",
+      "correctAnswer": 1,
+      "answers": [
+        "Sunshine",
+        "Swimsuits",
+        "Palm trees"
+      ]
+    },
+    {
+      "id": 6,
+      "question": "Pushkin's \"The Tale of the Fisherman and the Fish\" was based on the Brothers Grimm fairy tale \"The Fisherman and His Wife\". In it, the German \"colleague\" of our old woman turned into:",
+      "correctAnswer": 1,
+      "answers": [
+        "The Pope",
+        "A Queen",
+        "Director of a fish factory",
+        "Commander of a diving squad"
+      ]
+    },
+    {
+      "id": 7,
+      "question": "Find the error in this excerpt from Krylov's fable: \"The Dragonfly spent the summer singing; before she knew it, winter was upon her\".",
+      "correctAnswer": 2,
+      "answers": [
+        "Dragonflies cannot jump",
+        "These insects do not make sounds at all",
+        "There is no winter in the places Krylov wrote about",
+        "There is no error, everything is correct"
+      ]
+    },
+    {
+      "id": 8,
+      "question": "What was the commodity equivalent of money in the Russian Empire?",
+      "correctAnswer": 4,
+      "answers": [
+        "Cattle",
+        "Don tobacco",
+        "Women's earrings",
+        "Fur pelts"
+      ]
+    },
+    {
+      "id": 9,
+      "question": "The Kwakiutl, a small North American Indian tribe, have a tradition: when borrowing money, they leave as collateral...",
+      "correctAnswer": 2,
+      "answers": [
+        "Soul",
+        "Name",
+        "Enemy scalp",
+        "Tribal amulet"
+      ]
+    },
+    {
+      "id": 10,
+      "question": "Which famous artist sold only one painting during his lifetime?",
+      "correctAnswer": 4,
+      "answers": [
+        "Rembrandt Harmenszoon van Rijn",
+        "Jackson Pollock",
+        "Ivan Konstantinovich Aivazovsky",
+        "Vincent Van Gogh",
+        "Pierre-Auguste Renoir"
+      ]
+    }
+  ]
+}
