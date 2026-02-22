@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Get the root directory of the repository
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+# Get list of changed files
+changed_files=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Function to run lint-staged in a project directory
+run_lint_staged() {
+  project_dir="$1"
+  echo "Running lint-staged in $project_dir"
+  (cd "$ROOT_DIR/$project_dir" && npx lint-staged)
+}
+
+# Check which projects have changes and run lint-staged
+echo "$changed_files" | grep -q "^01 - bulls and cows/" && run_lint_staged "01 - bulls and cows"
+echo "$changed_files" | grep -q "^02 - rpg battle/" && run_lint_staged "02 - rpg battle"
+echo "$changed_files" | grep -q "^03 - quiz/" && run_lint_staged "03 - quiz"
+echo "$changed_files" | grep -q "^04 - tic tac toe/" && run_lint_staged "04 - tic tac toe"

@@ -1,56 +1,56 @@
-#language: ru
-Функционал: Крестики нолики
+#language: en
+Feature: Tic-Tac-Toe
 
-  Сценарий: Ход игрока
-    Дано пустое поле
-    И ходит игрок 1
-    Если игрок ходит в клетку 1, 1
-    То поле становится "100|000|000"
-    Если игрок ходит в клетку 2, 2
-    То поле становится "100|020|000"
-    Если игрок ходит в клетку 3, 1
-    То поле становится "101|020|000"
+  Scenario: Player move
+    Given an empty field
+    And player 1 is moving
+    When the player moves to cell 1, 1
+    Then the field becomes "100|000|000"
+    When the player moves to cell 2, 2
+    Then the field becomes "100|020|000"
+    When the player moves to cell 3, 1
+    Then the field becomes "101|020|000"
 
-  Сценарий: Ход игрока в заполненную клетку
-    Дано поле "100|200|102"
-    И ходит игрок 1
-    Если игрок ходит в клетку 1, 2
-    То возвращается ошибка
-    И поле становится "100|200|102"
-    Если игрок ходит в клетку 2, 2
-    То поле становится "100|210|102"
+  Scenario: Player move to an occupied cell
+    Given the field "100|200|102"
+    And player 1 is moving
+    When the player moves to cell 1, 2
+    Then an error is returned
+    And the field becomes "100|200|102"
+    When the player moves to cell 2, 2
+    Then the field becomes "100|210|102"
 
-  Сценарий: определение победителя по вертикали
-    Дано поле "102|120|002"
-    И ходит игрок 1
-    Если игрок ходит в клетку 1, 3
-    То поле становится "102|120|102"
-    И победил игрок 1
+  Scenario: Determine winner by vertical
+    Given the field "102|120|002"
+    And player 1 is moving
+    When the player moves to cell 1, 3
+    Then the field becomes "102|120|102"
+    And player 1 wins
 
-  Сценарий: определение победителя по горизонтали
-    Дано поле "101|022|001"
-    И ходит игрок 2
-    Если игрок ходит в клетку 1, 2
-    То поле становится "101|222|001"
-    И победил игрок 2
+  Scenario: Determine winner by horizontal
+    Given the field "101|022|001"
+    And player 2 is moving
+    When the player moves to cell 1, 2
+    Then the field becomes "101|222|001"
+    And player 2 wins
 
-  Сценарий: определение победителя по диагонали слева направо
-    Дано поле "000|210|201"
-    И ходит игрок 1
-    Если игрок ходит в клетку 1, 1
-    То поле становится "100|210|201"
-    И победил игрок 1
+  Scenario: Determine winner by diagonal left to right
+    Given the field "000|210|201"
+    And player 1 is moving
+    When the player moves to cell 1, 1
+    Then the field becomes "100|210|201"
+    And player 1 wins
 
-  Сценарий: определение победителя по диагонали справа налево
-    Дано поле "112|120|000"
-    И ходит игрок 2
-    Если игрок ходит в клетку 1, 3
-    То поле становится "112|120|200"
-    И победил игрок 2
+  Scenario: Determine winner by diagonal right to left
+    Given the field "112|120|000"
+    And player 2 is moving
+    When the player moves to cell 1, 3
+    Then the field becomes "112|120|200"
+    And player 2 wins
 
-  Сценарий: ничья
-    Дано поле "121|112|202"
-    И ходит игрок 1
-    Если игрок ходит в клетку 2, 3
-    То поле становится "121|112|212"
-    И ничья
+  Scenario: Draw
+    Given the field "121|112|202"
+    And player 1 is moving
+    When the player moves to cell 2, 3
+    Then the field becomes "121|112|212"
+    And it's a draw

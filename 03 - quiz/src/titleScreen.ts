@@ -15,7 +15,7 @@ const LOGO_ASCII = `
 
 export const COLORS = ['green', 'yellow', 'blue', 'magenta'] as const;
 
-export function getRandomColor(): typeof COLORS[number] {
+export function getRandomColor(): (typeof COLORS)[number] {
   return COLORS[Math.floor(Math.random() * COLORS.length)];
 }
 

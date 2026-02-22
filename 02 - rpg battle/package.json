@@ -7,7 +7,12 @@
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
     "dev": "ts-node index.ts",
-    "test": "jest --verbose --coverage"
+    "test": "jest --verbose --coverage",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
+    "format": "prettier --write \"**/*.{ts,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,json,md}\"",
+    "prepare": "husky"
   },
   "author": "@ivaneroshkin",
   "license": "ISC",
@@ -17,7 +22,14 @@
   "devDependencies": {
     "@types/jest": "^30.0.0",
     "@types/node": "^22.10.5",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.15.0",
+    "husky": "^9.1.7",
     "jest": "^30.0.0",
+    "jiti": "^2.4.2",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
@@ -25,6 +37,16 @@
   "overrides": {
     "glob": "^13.0.0",
     "minimatch": "^10.0.0",
-    "inflight": "npm:@humanfs/inflight@^1.0.0"
+    "inflight": "npm:@humanfs/inflight@^1.0.0",
+    "test-exclude": "^7.0.1"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }

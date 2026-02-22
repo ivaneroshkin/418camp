@@ -69,33 +69,31 @@ describe('gameLogic', () => {
 
     it('should return valid input without duplicates', async () => {
       questionSpy.mockResolvedValueOnce('1234');
-      
+
       const result = await getAttempt(1, 4);
-      
+
       expect(result).toEqual(['1', '2', '3', '4']);
       expect(consoleLogSpy).toHaveBeenCalledWith('Attempt number 1');
     });
 
     it('should reject input with wrong length and retry', async () => {
-      questionSpy
-        .mockResolvedValueOnce('12')
-        .mockResolvedValueOnce('1234');
-      
+      questionSpy.mockResolvedValueOnce('12').mockResolvedValueOnce('1234');
+
       const result = await getAttempt(2, 4);
-      
+
       expect(result).toEqual(['1', '2', '3', '4']);
       expect(consoleLogSpy).toHaveBeenCalledWith('Enter a number from 4 digits');
     });
 
     it('should reject input with duplicates and retry', async () => {
-      questionSpy
-        .mockResolvedValueOnce('1123')
-        .mockResolvedValueOnce('1234');
-      
+      questionSpy.mockResolvedValueOnce('1123').mockResolvedValueOnce('1234');
+
       const result = await getAttempt(3, 4);
-      
+
       expect(result).toEqual(['1', '2', '3', '4']);
-      expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('Digits must not be repeated!'));
+      expect(consoleLogSpy).toHaveBeenCalledWith(
+        expect.stringContaining('Digits must not be repeated!')
+      );
     });
   });
 });

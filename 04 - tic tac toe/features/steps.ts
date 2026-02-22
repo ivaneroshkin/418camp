@@ -1,36 +1,35 @@
-const { Given, When, Then } = require('cucumber');
-const assert = require('assert');
-const {
+import { Given, When, Then } from '@cucumber/cucumber';
+import assert from 'node:assert';
+import {
   displayFieldAsString,
   displayStringAsField,
   getSwitch,
   getCell,
-  checkMoveResult
-} = require('../utils');
+  checkMoveResult,
+} from '../src/utils.js';
 
-const {
-  eventBusyCell
-} = require('../events');
+import { eventBusyCell } from '../src/events.js';
 
+import type { Player } from '../src/utils.js';
 
-let initialField;
-let playerSwitcher;
-let horizontalCell;
-let verticalCell;
+let initialField: number[][];
+let playerSwitcher: Player;
+let horizontalCell: number;
+let verticalCell: number;
 
-Given('пустое поле', () => {
+Given('an empty field', () => {
   initialField = [
     [0, 0, 0],
     [0, 0, 0],
-    [0, 0, 0]
+    [0, 0, 0],
   ];
 });
 
-Given('ходит игрок {int}', (input) => {
-  playerSwitcher = input;
+Given('player {int} is moving', (input: number) => {
+  playerSwitcher = input as Player;
 });
 
-When('игрок ходит в клетку {int}, {int}', (int, int2) => {
+When('the player moves to cell {int}, {int}', (int: number, int2: number) => {
   const fieldSnapshot = JSON.parse(JSON.stringify(initialField));
   [verticalCell, horizontalCell] = [int, int2];
   getCell(verticalCell, horizontalCell, initialField, playerSwitcher);
@@ -39,19 +38,19 @@ When('игрок ходит в клетку {int}, {int}', (int, int2) => {
   }
 });
 
-Then('поле становится {string}', (string) => {
+Then('the field becomes {string}', (string: string) => {
   assert.equal(displayFieldAsString(initialField), string);
 });
 
-Given('поле {string}', (string) => {
+Given('the field {string}', (string: string) => {
   initialField = displayStringAsField(string);
 });
 
-Then('возвращается ошибка', () => {
+Then('an error is returned', () => {
   eventBusyCell();
 });
 
-Then('победил игрок {int}', (int) => {
+Then('player {int} wins', (int: number) => {
   let winner = 0;
   if (checkMoveResult(initialField)) {
     winner = getSwitch(playerSwitcher);
@@ -59,7 +58,7 @@ Then('победил игрок {int}', (int) => {
   assert.equal(int, winner);
 });
 
-Then('ничья', () => {
+Then("it's a draw", () => {
   const isGameFinished = checkMoveResult(initialField);
   assert.equal('deadHeat', isGameFinished);
 });

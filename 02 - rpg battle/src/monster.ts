@@ -10,7 +10,7 @@ export const monster: Monster = {
       magicDmg: 0,
       physicArmorPercents: 20,
       magicArmorPercents: 20,
-      cooldown: 0
+      cooldown: 0,
     },
     {
       name: 'Fire Breath',
@@ -18,7 +18,7 @@ export const monster: Monster = {
       magicDmg: 4,
       physicArmorPercents: 0,
       magicArmorPercents: 0,
-      cooldown: 3
+      cooldown: 3,
     },
     {
       name: 'Tail Strike',
@@ -26,7 +26,7 @@ export const monster: Monster = {
       magicDmg: 0,
       physicArmorPercents: 50,
       magicArmorPercents: 0,
-      cooldown: 2
-    }
-  ]
+      cooldown: 2,
+    },
+  ],
 };
