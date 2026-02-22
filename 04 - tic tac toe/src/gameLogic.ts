@@ -5,7 +5,7 @@ import {
   getCell,
   checkMoveResult,
   type GameField,
-  type Player
+  type Player,
 } from './utils.js';
 
 import {
@@ -13,19 +13,19 @@ import {
   eventPlayerMove,
   eventPlayerWin,
   eventBusyCell,
-  eventDeadHeat
+  eventDeadHeat,
 } from './events.js';
 
 const initialField: GameField = [
   [0, 0, 0],
   [0, 0, 0],
-  [0, 0, 0]
+  [0, 0, 0],
 ];
 
 export async function main(): Promise<void> {
   eventStartGame();
   let playerSwitcher: Player = 1;
-  
+
   while (true) {
     eventPlayerMove(playerSwitcher);
     const fieldSnapshot = JSON.parse(JSON.stringify(initialField));

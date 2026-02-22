@@ -5,8 +5,8 @@ const config: IConfiguration = {
     requireModule: ['tsx'],
     import: ['features/**/*.ts'],
     format: ['progress', 'html:cucumber-report.html'],
-    publishQuiet: true
-  }
+    publishQuiet: true,
+  },
 };
 
 export default config;

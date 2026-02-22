@@ -31,11 +31,8 @@ export function getRandomNumber(size: number): number {
 
 export function roundHealth(health: number, defender: Move, attacker: Move): number {
   const physical =
-    attacker.physicalDmg -
-    damageProof(attacker.physicalDmg, defender.physicArmorPercents);
-  const magical =
-    attacker.magicDmg -
-    damageProof(attacker.magicDmg, defender.magicArmorPercents);
+    attacker.physicalDmg - damageProof(attacker.physicalDmg, defender.physicArmorPercents);
+  const magical = attacker.magicDmg - damageProof(attacker.magicDmg, defender.magicArmorPercents);
   return health - (physical + magical);
 }
 
@@ -52,32 +49,42 @@ export function dropCooldowns(cooldowns: Cooldowns): void {
 }
 
 export function displayMoveChars(obj: Move): void {
-  console.log(styleText('cyan', `
+  console.log(
+    styleText(
+      'cyan',
+      `
   Physical damage: ${obj.physicalDmg}
   Magic damage: ${obj.magicDmg}
   Physical armor: ${obj.physicArmorPercents}
   Magic armor: ${obj.magicArmorPercents}
   Turns to recover: ${obj.cooldown}
-`));
+`
+    )
+  );
 }
 
-function createHealthBar(current: number, max: number, name: string, color: 'red' | 'green'): string {
+function createHealthBar(
+  current: number,
+  max: number,
+  name: string,
+  color: 'red' | 'green'
+): string {
   const percentage = Math.max(0, Math.min(100, (current / max) * 100));
   const filledBlocks = Math.round((percentage / 100) * 10);
   const emptyBlocks = 10 - filledBlocks;
-  
+
   const bar = '█'.repeat(filledBlocks) + '░'.repeat(emptyBlocks);
   const currentHP = Math.max(0, current).toFixed(1);
   const maxHP = max.toFixed(1);
   const coloredName = styleText(color, name.padEnd(8));
-  
+
   return `${coloredName} [${bar}] ${percentage.toFixed(0)}% (${currentHP}/${maxHP} HP)`;
 }
 
 export function endRoundStats(
-  enemyHealth: number, 
-  playerHealth: number, 
-  enemyMaxHealth: number, 
+  enemyHealth: number,
+  playerHealth: number,
+  enemyMaxHealth: number,
   playerMaxHealth: number
 ): void {
   console.log(styleText('blue', '\nEnd of round!\n'));
@@ -94,8 +101,8 @@ export function sayAboutChoose(name: string, move: string): void {
   const bgColor = name === 'Monster' ? 'bgRed' : 'bgGreen';
   const fgColor = name === 'Monster' ? 'red' : 'green';
   console.log(
-    styleText(['black', bgColor], name) + 
-    ' chooses move: ' + 
-    styleText(fgColor, move.toLocaleUpperCase())
+    styleText(['black', bgColor], name) +
+      ' chooses move: ' +
+      styleText(fgColor, move.toLocaleUpperCase())
   );
 }

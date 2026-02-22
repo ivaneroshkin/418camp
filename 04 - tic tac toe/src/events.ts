@@ -1,12 +1,17 @@
 import { styleText } from 'node:util';
 
 export function eventStartGame(): void {
-  console.log(styleText('cyan', `This is the "Tic-Tac-Toe" game
+  console.log(
+    styleText(
+      'cyan',
+      `This is the "Tic-Tac-Toe" game
   The game field looks like this:
     000
     000
     000
-  `));
+  `
+    )
+  );
 }
 
 export function eventChooseCell(): void {
@@ -15,7 +20,10 @@ export function eventChooseCell(): void {
 
 export function eventBusyCell(): void {
   console.log(
-    styleText('red', 'The selected cell is occupied by another player! You must choose a different cell')
+    styleText(
+      'red',
+      'The selected cell is occupied by another player! You must choose a different cell'
+    )
   );
 }
 

@@ -4,7 +4,7 @@ import {
   displayStringAsField,
   getCell,
   checkMoveResult,
-  type GameField
+  type GameField,
 } from '../src/utils.js';
 
 describe('getSwitch', () => {
@@ -22,7 +22,7 @@ describe('displayFieldAsString', () => {
     const field: GameField = [
       [0, 0, 0],
       [0, 0, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     expect(displayFieldAsString(field)).toBe('000|000|000');
   });
@@ -31,7 +31,7 @@ describe('displayFieldAsString', () => {
     const field: GameField = [
       [1, 0, 0],
       [0, 2, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     expect(displayFieldAsString(field)).toBe('100|020|000');
   });
@@ -43,7 +43,7 @@ describe('displayStringAsField', () => {
     expect(result).toEqual([
       [0, 0, 0],
       [0, 0, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ]);
   });
 
@@ -52,7 +52,7 @@ describe('displayStringAsField', () => {
     expect(result).toEqual([
       [1, 0, 0],
       [0, 2, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ]);
   });
 });
@@ -62,7 +62,7 @@ describe('getCell', () => {
     const field: GameField = [
       [0, 0, 0],
       [0, 0, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     getCell(1, 1, field, 1);
     expect(field[0][0]).toBe(1);
@@ -72,7 +72,7 @@ describe('getCell', () => {
     const field: GameField = [
       [1, 0, 0],
       [0, 0, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     getCell(1, 1, field, 2);
     expect(field[0][0]).toBe(1);
@@ -84,7 +84,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 0, 0],
       [0, 2, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     expect(checkMoveResult(field)).toBe(false);
   });
@@ -93,7 +93,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 1, 1],
       [0, 2, 0],
-      [0, 0, 0]
+      [0, 0, 0],
     ];
     expect(checkMoveResult(field)).toBe(true);
   });
@@ -102,7 +102,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 0, 2],
       [1, 0, 0],
-      [1, 0, 0]
+      [1, 0, 0],
     ];
     expect(checkMoveResult(field)).toBe(true);
   });
@@ -111,7 +111,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 0, 2],
       [0, 1, 0],
-      [2, 0, 1]
+      [2, 0, 1],
     ];
     expect(checkMoveResult(field)).toBe(true);
   });
@@ -120,7 +120,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 0, 2],
       [0, 2, 0],
-      [2, 0, 1]
+      [2, 0, 1],
     ];
     expect(checkMoveResult(field)).toBe(true);
   });
@@ -129,7 +129,7 @@ describe('checkMoveResult', () => {
     const field: GameField = [
       [1, 2, 1],
       [1, 1, 2],
-      [2, 1, 2]
+      [2, 1, 2],
     ];
     expect(checkMoveResult(field)).toBe('deadHeat');
   });

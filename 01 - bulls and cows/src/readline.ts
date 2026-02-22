@@ -25,5 +25,5 @@ function close(): void {
 export default {
   question,
   close,
-  getInterface
+  getInterface,
 };

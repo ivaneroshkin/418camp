@@ -4,33 +4,19 @@
       "id": 1,
       "question": "In what year was George Orwell's dystopian novel \"1984\" written?",
       "correctAnswer": 2,
-      "answers": [
-        "1984",
-        "1948",
-        "1956",
-        "1982",
-        "1928"
-      ]
+      "answers": ["1984", "1948", "1956", "1982", "1928"]
     },
     {
       "id": 2,
       "question": "Which US president wrote his own story about Sherlock Holmes?",
       "correctAnswer": 2,
-      "answers": [
-        "John Kennedy",
-        "Franklin Roosevelt",
-        "Ronald Reagan"
-      ]
+      "answers": ["John Kennedy", "Franklin Roosevelt", "Ronald Reagan"]
     },
     {
       "id": 3,
       "question": "What tax was introduced in 12th century England to force men to go to war?",
       "correctAnswer": 3,
-      "answers": [
-        "Tax on idleness",
-        "Tax on lack of boots",
-        "Tax on cowardice"
-      ]
+      "answers": ["Tax on idleness", "Tax on lack of boots", "Tax on cowardice"]
     },
     {
       "id": 4,
@@ -46,11 +32,7 @@
       "id": 5,
       "question": "Tourists arriving in Mallorca are required to pay a tax on...",
       "correctAnswer": 1,
-      "answers": [
-        "Sunshine",
-        "Swimsuits",
-        "Palm trees"
-      ]
+      "answers": ["Sunshine", "Swimsuits", "Palm trees"]
     },
     {
       "id": 6,
@@ -78,23 +60,13 @@
       "id": 8,
       "question": "What was the commodity equivalent of money in the Russian Empire?",
       "correctAnswer": 4,
-      "answers": [
-        "Cattle",
-        "Don tobacco",
-        "Women's earrings",
-        "Fur pelts"
-      ]
+      "answers": ["Cattle", "Don tobacco", "Women's earrings", "Fur pelts"]
     },
     {
       "id": 9,
       "question": "The Kwakiutl, a small North American Indian tribe, have a tradition: when borrowing money, they leave as collateral...",
       "correctAnswer": 2,
-      "answers": [
-        "Soul",
-        "Name",
-        "Enemy scalp",
-        "Tribal amulet"
-      ]
+      "answers": ["Soul", "Name", "Enemy scalp", "Tribal amulet"]
     },
     {
       "id": 10,

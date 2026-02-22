@@ -15,16 +15,10 @@ const config: Config = {
       },
     ],
   },
-  testMatch: [
-    '**/test/**/*.test.ts',
-    '**/__tests__/**/*.ts'
-  ],
-  collectCoverageFrom: [
-    'src/**/*.ts',
-    '!src/**/*.d.ts'
-  ],
+  testMatch: ['**/test/**/*.test.ts', '**/__tests__/**/*.ts'],
+  collectCoverageFrom: ['src/**/*.ts', '!src/**/*.d.ts'],
   coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html']
+  coverageReporters: ['text', 'lcov', 'html'],
 };
 
 export default config;
