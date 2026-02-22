@@ -6,7 +6,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have Battle Censer Strike move', () => {
-    const move = wizard.moves.find(m => m.name === 'Battle Censer Strike');
+    const move = wizard.moves.find((m) => m.name === 'Battle Censer Strike');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(2);
     expect(move?.magicDmg).toBe(0);
@@ -16,7 +16,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have Left Heel Spin move', () => {
-    const move = wizard.moves.find(m => m.name === 'Left Heel Spin');
+    const move = wizard.moves.find((m) => m.name === 'Left Heel Spin');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(4);
     expect(move?.magicDmg).toBe(0);
@@ -26,7 +26,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have Canonical Fireball move', () => {
-    const move = wizard.moves.find(m => m.name === 'Canonical Fireball');
+    const move = wizard.moves.find((m) => m.name === 'Canonical Fireball');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(0);
     expect(move?.magicDmg).toBe(5);
@@ -36,7 +36,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have Magic Block move', () => {
-    const move = wizard.moves.find(m => m.name === 'Magic Block');
+    const move = wizard.moves.find((m) => m.name === 'Magic Block');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(0);
     expect(move?.magicDmg).toBe(0);
@@ -46,7 +46,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have all moves with required properties', () => {
-    wizard.moves.forEach(move => {
+    wizard.moves.forEach((move) => {
       expect(move).toHaveProperty('name');
       expect(move).toHaveProperty('physicalDmg');
       expect(move).toHaveProperty('magicDmg');
@@ -57,7 +57,7 @@ describe('Wizard Character', () => {
   });
 
   it('should have at least one move with no cooldown', () => {
-    const noCooldownMoves = wizard.moves.filter(m => m.cooldown === 0);
+    const noCooldownMoves = wizard.moves.filter((m) => m.cooldown === 0);
     expect(noCooldownMoves.length).toBeGreaterThan(0);
   });
 });

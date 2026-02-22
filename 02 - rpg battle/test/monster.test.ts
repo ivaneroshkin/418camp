@@ -14,7 +14,7 @@ describe('Monster Character', () => {
   });
 
   it('should have Clawed Paw Strike move', () => {
-    const move = monster.moves.find(m => m.name === 'Clawed Paw Strike');
+    const move = monster.moves.find((m) => m.name === 'Clawed Paw Strike');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(3);
     expect(move?.magicDmg).toBe(0);
@@ -24,7 +24,7 @@ describe('Monster Character', () => {
   });
 
   it('should have Fire Breath move', () => {
-    const move = monster.moves.find(m => m.name === 'Fire Breath');
+    const move = monster.moves.find((m) => m.name === 'Fire Breath');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(0);
     expect(move?.magicDmg).toBe(4);
@@ -34,7 +34,7 @@ describe('Monster Character', () => {
   });
 
   it('should have Tail Strike move', () => {
-    const move = monster.moves.find(m => m.name === 'Tail Strike');
+    const move = monster.moves.find((m) => m.name === 'Tail Strike');
     expect(move).toBeDefined();
     expect(move?.physicalDmg).toBe(2);
     expect(move?.magicDmg).toBe(0);
@@ -44,7 +44,7 @@ describe('Monster Character', () => {
   });
 
   it('should have all moves with required properties', () => {
-    monster.moves.forEach(move => {
+    monster.moves.forEach((move) => {
       expect(move).toHaveProperty('name');
       expect(move).toHaveProperty('physicalDmg');
       expect(move).toHaveProperty('magicDmg');
@@ -55,14 +55,14 @@ describe('Monster Character', () => {
   });
 
   it('should have at least one move with no cooldown', () => {
-    const noCooldownMoves = monster.moves.filter(m => m.cooldown === 0);
+    const noCooldownMoves = monster.moves.filter((m) => m.cooldown === 0);
     expect(noCooldownMoves.length).toBeGreaterThan(0);
   });
 
   it('should have both physical and magic damage moves', () => {
-    const physicalMoves = monster.moves.filter(m => m.physicalDmg > 0);
-    const magicMoves = monster.moves.filter(m => m.magicDmg > 0);
-    
+    const physicalMoves = monster.moves.filter((m) => m.physicalDmg > 0);
+    const magicMoves = monster.moves.filter((m) => m.magicDmg > 0);
+
     expect(physicalMoves.length).toBeGreaterThan(0);
     expect(magicMoves.length).toBeGreaterThan(0);
   });

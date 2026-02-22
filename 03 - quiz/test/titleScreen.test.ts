@@ -14,7 +14,7 @@ describe('getRandomColor', () => {
 
   it('should potentially return different colors on multiple calls', () => {
     const colors = new Set<string>();
-    
+
     for (let i = 0; i < 20; i++) {
       colors.add(getRandomColor());
     }
@@ -44,7 +44,7 @@ describe('titleScreen', () => {
 
   it('should display the logo ASCII art', () => {
     titleScreen();
-    
+
     expect(consoleLogSpy).toHaveBeenCalled();
     const allOutput = consoleLogSpy.mock.calls.flat().join(' ');
     expect(allOutput).toContain('___');
@@ -53,7 +53,7 @@ describe('titleScreen', () => {
 
   it('should display the rules', () => {
     titleScreen();
-    
+
     const allOutput = consoleLogSpy.mock.calls.flat().join(' ');
     expect(allOutput).toContain('Answer 5 random questions');
   });

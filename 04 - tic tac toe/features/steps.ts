@@ -5,7 +5,7 @@ import {
   displayStringAsField,
   getSwitch,
   getCell,
-  checkMoveResult
+  checkMoveResult,
 } from '../src/utils.js';
 
 import { eventBusyCell } from '../src/events.js';
@@ -21,7 +21,7 @@ Given('an empty field', () => {
   initialField = [
     [0, 0, 0],
     [0, 0, 0],
-    [0, 0, 0]
+    [0, 0, 0],
   ];
 });
 

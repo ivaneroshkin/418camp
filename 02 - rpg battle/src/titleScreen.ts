@@ -2,13 +2,16 @@ import { styleText } from 'node:util';
 
 const colors = ['cyan', 'red', 'magenta', 'yellow', 'green', 'blue'] as const;
 
-function getRandomColor(): typeof colors[number] {
+function getRandomColor(): (typeof colors)[number] {
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
 export const titleScreen = (): void => {
   const color = getRandomColor();
-  console.log(styleText(color, `
+  console.log(
+    styleText(
+      color,
+      `
 ╔══════════════════════════════════════════════╗
 ║                                              ║
 ║    ░█▀▄░█▀█░█▀▀░░░█▀▄░█▀█░▀█▀░▀█▀░█░░░█▀▀    ║
@@ -20,5 +23,7 @@ export const titleScreen = (): void => {
 ║                                              ║
 ║                                              ║
 ╚══════════════════════════════════════════════╝
-`));
+`
+    )
+  );
 };

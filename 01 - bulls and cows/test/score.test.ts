@@ -45,23 +45,17 @@ describe('score', () => {
   describe('finalScore', () => {
     it('should display winning message with move count', () => {
       finalScore(5);
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Congratulations! You won! Moves needed: 5'
-      );
+      expect(consoleLogSpy).toHaveBeenCalledWith('Congratulations! You won! Moves needed: 5');
     });
 
     it('should display winning message with single move', () => {
       finalScore(1);
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Congratulations! You won! Moves needed: 1'
-      );
+      expect(consoleLogSpy).toHaveBeenCalledWith('Congratulations! You won! Moves needed: 1');
     });
 
     it('should display winning message with many moves', () => {
       finalScore(20);
-      expect(consoleLogSpy).toHaveBeenCalledWith(
-        'Congratulations! You won! Moves needed: 20'
-      );
+      expect(consoleLogSpy).toHaveBeenCalledWith('Congratulations! You won! Moves needed: 20');
     });
   });
 });

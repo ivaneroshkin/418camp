@@ -162,12 +162,14 @@ describe('startGame', () => {
       await startGame();
     } catch (e) {}
 
-    const logCalls = consoleLogSpy.mock.calls.map(call => call[0]);
-    const hasDigitsOnlyError = logCalls.some(log => 
-      typeof log === 'string' && log.includes('Please enter digits only!')
+    const logCalls = consoleLogSpy.mock.calls.map((call) => call[0]);
+    const hasDigitsOnlyError = logCalls.some(
+      (log) => typeof log === 'string' && log.includes('Please enter digits only!')
     );
-    const hasRangeError = logCalls.some(log => 
-      typeof log === 'string' && log.includes('Difficulty cannot be less than 3 or more than 6 digits')
+    const hasRangeError = logCalls.some(
+      (log) =>
+        typeof log === 'string' &&
+        log.includes('Difficulty cannot be less than 3 or more than 6 digits')
     );
 
     expect(hasDigitsOnlyError).toBe(true);

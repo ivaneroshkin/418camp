@@ -12,7 +12,7 @@ import {
   displayMoveChars,
   endRoundStats,
   requireChooseMove,
-  sayAboutChoose
+  sayAboutChoose,
 } from './utils';
 import { Move, Cooldowns } from './types';
 import { titleScreen } from './titleScreen';
@@ -29,7 +29,11 @@ async function keyInYN(prompt: string): Promise<boolean> {
   return answer.toLowerCase() === 'y';
 }
 
-async function keyInSelect(items: string[], prompt: string, options?: { cancel?: string }): Promise<number> {
+async function keyInSelect(
+  items: string[],
+  prompt: string,
+  options?: { cancel?: string }
+): Promise<number> {
   console.log(prompt);
   items.forEach((item, index) => {
     console.log(`[${index + 1}] ${item}`);
@@ -37,39 +41,46 @@ async function keyInSelect(items: string[], prompt: string, options?: { cancel?:
   if (options?.cancel) {
     console.log(`[0] ${options.cancel}`);
   }
-  
+
   const answer = await rl.question('Select: ');
   const selection = parseInt(answer, 10);
-  
+
   if (isNaN(selection) || selection < 0 || selection > items.length) {
     return -1;
   }
-  
+
   return selection - 1;
 }
 
-function resetGameState() {
+function resetGameState(): {
+  enemyHealth: number;
+  enemyMaxHealth: number;
+  playerHealth: number;
+  playerMaxHealth: number;
+  monsterCooldowns: Cooldowns;
+  wizardCooldowns: Cooldowns;
+} {
   return {
     enemyHealth: monster.maxHealth,
     enemyMaxHealth: monster.maxHealth,
     playerHealth: 0,
     playerMaxHealth: 0,
     monsterCooldowns: {} as Cooldowns,
-    wizardCooldowns: {} as Cooldowns
+    wizardCooldowns: {} as Cooldowns,
   };
 }
 
 export async function game(): Promise<void> {
   while (true) {
     const gameResult = await playGame();
-    
+
     if (gameResult === 'quit') {
       console.log(styleText('yellow', `Thanks for playing!`));
       break;
     }
-    
+
     console.log('');
-    if (!await keyInYN('Play again?')) {
+    if (!(await keyInYN('Play again?'))) {
       console.log(styleText('yellow', `Thanks for playing!`));
       break;
     }
@@ -81,15 +92,13 @@ export async function game(): Promise<void> {
 async function playGame(): Promise<'quit' | 'finished'> {
   titleScreen();
   console.log(styleText('green', `Welcome to RPG Battle!`));
-  const difficultyGame = await keyInSelect(
-    difficultyArray,
-    `Choose game difficulty:`,
-    { cancel: 'Cancel' }
-  );
+  const difficultyGame = await keyInSelect(difficultyArray, `Choose game difficulty:`, {
+    cancel: 'Cancel',
+  });
   if (difficultyGame < 0) {
     console.log(styleText('red', `Hahaha! You're a coward! There's no turning back...`));
   }
-  
+
   const gameState = resetGameState();
   const maxHealth = setLevel(difficultyArray[difficultyGame]);
   gameState.playerHealth = maxHealth;
@@ -113,7 +122,7 @@ async function playGame(): Promise<'quit' | 'finished'> {
       }
       roundMonsterMove = monsterMove(gameState.monsterCooldowns);
     }
-    
+
     if (roundWizardMove === 'quit') {
       return 'quit';
     }
@@ -121,7 +130,12 @@ async function playGame(): Promise<'quit' | 'finished'> {
     gameState.enemyHealth = roundHealth(gameState.enemyHealth, roundMonsterMove, roundWizardMove);
     gameState.playerHealth = roundHealth(gameState.playerHealth, roundWizardMove, roundMonsterMove);
 
-    endRoundStats(gameState.enemyHealth, gameState.playerHealth, gameState.enemyMaxHealth, gameState.playerMaxHealth);
+    endRoundStats(
+      gameState.enemyHealth,
+      gameState.playerHealth,
+      gameState.enemyMaxHealth,
+      gameState.playerMaxHealth
+    );
     displayRandomComment();
 
     if (gameState.enemyHealth <= 0 && gameState.playerHealth <= 0) {
@@ -133,9 +147,14 @@ async function playGame(): Promise<'quit' | 'finished'> {
       return 'finished';
     }
     if (gameState.playerHealth <= 0) {
-      console.log(styleText('red', `YOU DIED!
+      console.log(
+        styleText(
+          'red',
+          `YOU DIED!
       ${wizardName} fell a hero's death...
-      `));
+      `
+        )
+      );
       return 'finished';
     }
 
@@ -163,10 +182,10 @@ function monsterMove(monsterCooldowns: Cooldowns): Move {
 
 async function wizardMove(wizardCooldowns: Cooldowns): Promise<Move | 'quit'> {
   while (true) {
-    const availableWizardMoves = wizard.moves.map(elem => {
+    const availableWizardMoves = wizard.moves.map((elem) => {
       return elem.name;
     });
-    
+
     const currentWizardMove = await keyInSelect(
       availableWizardMoves,
       `Which move will the Battle Mage choose?`,
@@ -178,18 +197,21 @@ async function wizardMove(wizardCooldowns: Cooldowns): Promise<Move | 'quit'> {
       }
       continue;
     }
-    
+
     if (wizardCooldowns[availableWizardMoves[currentWizardMove]] > 0) {
-      console.log(styleText('bgMagenta',
-        `${wizardName} hasn't recovered this move yet. Move will be available in ${
-          wizardCooldowns[availableWizardMoves[currentWizardMove]]
-        } turns`
-      ));
+      console.log(
+        styleText(
+          'bgMagenta',
+          `${wizardName} hasn't recovered this move yet. Move will be available in ${
+            wizardCooldowns[availableWizardMoves[currentWizardMove]]
+          } turns`
+        )
+      );
       continue;
     }
 
     sayAboutChoose(wizardName, availableWizardMoves[currentWizardMove]);
-    wizard.moves.forEach(elem => {
+    wizard.moves.forEach((elem) => {
       if (elem.name === availableWizardMoves[currentWizardMove]) {
         displayMoveChars(elem);
       }
@@ -197,7 +219,7 @@ async function wizardMove(wizardCooldowns: Cooldowns): Promise<Move | 'quit'> {
     if (await keyInYN(`Confirm choice?`)) {
       console.log(` `);
       let result: Move | undefined;
-      wizard.moves.forEach(elem => {
+      wizard.moves.forEach((elem) => {
         if (elem.name === availableWizardMoves[currentWizardMove]) {
           result = elem;
           wizardCooldowns[elem.name] = elem.cooldown;

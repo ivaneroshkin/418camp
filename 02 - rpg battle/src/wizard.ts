@@ -8,7 +8,7 @@ export const wizard: Character = {
       magicDmg: 0,
       physicArmorPercents: 0,
       magicArmorPercents: 50,
-      cooldown: 0
+      cooldown: 0,
     },
     {
       name: 'Left Heel Spin',
@@ -16,7 +16,7 @@ export const wizard: Character = {
       magicDmg: 0,
       physicArmorPercents: 0,
       magicArmorPercents: 0,
-      cooldown: 4
+      cooldown: 4,
     },
     {
       name: 'Canonical Fireball',
@@ -24,7 +24,7 @@ export const wizard: Character = {
       magicDmg: 5,
       physicArmorPercents: 0,
       magicArmorPercents: 0,
-      cooldown: 3
+      cooldown: 3,
     },
     {
       name: 'Magic Block',
@@ -32,7 +32,7 @@ export const wizard: Character = {
       magicDmg: 0,
       physicArmorPercents: 100,
       magicArmorPercents: 100,
-      cooldown: 4
-    }
-  ]
+      cooldown: 4,
+    },
+  ],
 };

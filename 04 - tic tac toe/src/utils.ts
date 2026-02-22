@@ -23,25 +23,25 @@ export function displayStringAsField(string: string): GameField {
 
 export async function playerMove(): Promise<[number, number]> {
   const rl = readline.createInterface({ input, output });
-  
+
   while (true) {
     try {
       const verticalInput = await rl.question('Vertical cell position (1-3): ');
       const verticalCell = parseInt(verticalInput, 10);
-      
+
       if (verticalCell < 1 || verticalCell > 3 || isNaN(verticalCell)) {
         eventChooseCell();
         continue;
       }
-      
+
       const horizontalInput = await rl.question('Horizontal cell position (1-3): ');
       const horizontalCell = parseInt(horizontalInput, 10);
-      
+
       if (horizontalCell < 1 || horizontalCell > 3 || isNaN(horizontalCell)) {
         eventChooseCell();
         continue;
       }
-      
+
       rl.close();
       return [horizontalCell, verticalCell];
     } catch {
@@ -72,7 +72,7 @@ export function checkMoveResult(gameField: GameField): boolean | 'deadHeat' {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6]
+    [2, 4, 6],
   ];
 
   const currentState = gameField.flat();
