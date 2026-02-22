@@ -1,3 +1,4 @@
+import { styleText } from 'node:util';
 import * as readlineSync from 'readline-sync';
 import { monster } from './monster';
 import { wizard } from './wizard';
@@ -16,69 +17,100 @@ import { Move, Cooldowns } from './types';
 
 const nameMonster = `Monster`;
 const wizardName = `Eustace`;
-let enemyHealth = monster.maxHealth;
 const enemyAllMoves = monster.moves.length;
-let playerHealth: number;
 
-const monsterCooldowns: Cooldowns = {};
-const wizardCooldowns: Cooldowns = {};
+function resetGameState() {
+  return {
+    enemyHealth: monster.maxHealth,
+    playerHealth: 0,
+    monsterCooldowns: {} as Cooldowns,
+    wizardCooldowns: {} as Cooldowns
+  };
+}
 
 export function game(): void {
-  console.log(`Welcome to RPG Battle!`);
+  while (true) {
+    const gameResult = playGame();
+    
+    if (gameResult === 'quit') {
+      console.log(styleText('yellow', `Thanks for playing!`));
+      break;
+    }
+    
+    console.log('');
+    if (!readlineSync.keyInYN('Play again?')) {
+      console.log(styleText('yellow', `Thanks for playing!`));
+      break;
+    }
+    console.log('');
+  }
+}
+
+function playGame(): 'quit' | 'finished' {
+  console.log(styleText('green', `Welcome to RPG Battle!`));
   const difficultyGame = readlineSync.keyInSelect(
     difficultyArray,
     `Choose game difficulty:`
   );
   if (difficultyGame < 0) {
-    console.log(`There's no turning back...`);
+    console.log(styleText('red', `There's no turning back...`));
   }
-  playerHealth = setLevel(difficultyArray[difficultyGame]);
+  
+  const gameState = resetGameState();
+  gameState.playerHealth = setLevel(difficultyArray[difficultyGame]);
 
   let moveSwitcher = 0;
 
   while (true) {
-    console.log(`New round`);
+    console.log(styleText('green', `New round`));
 
     let roundMonsterMove: Move;
-    let roundWizardMove: Move;
+    let roundWizardMove: Move | 'quit';
 
     if (!moveSwitcher) {
-      roundMonsterMove = monsterMove();
-      roundWizardMove = wizardMove();
+      roundMonsterMove = monsterMove(gameState.monsterCooldowns);
+      roundWizardMove = wizardMove(gameState.wizardCooldowns);
     } else {
-      roundWizardMove = wizardMove();
-      roundMonsterMove = monsterMove();
+      roundWizardMove = wizardMove(gameState.wizardCooldowns);
+      if (roundWizardMove === 'quit') {
+        return 'quit';
+      }
+      roundMonsterMove = monsterMove(gameState.monsterCooldowns);
+    }
+    
+    if (roundWizardMove === 'quit') {
+      return 'quit';
     }
 
-    enemyHealth = roundHealth(enemyHealth, roundMonsterMove, roundWizardMove);
-    playerHealth = roundHealth(playerHealth, roundWizardMove, roundMonsterMove);
+    gameState.enemyHealth = roundHealth(gameState.enemyHealth, roundMonsterMove, roundWizardMove);
+    gameState.playerHealth = roundHealth(gameState.playerHealth, roundWizardMove, roundMonsterMove);
 
-    endRoundStats(enemyHealth, playerHealth);
+    endRoundStats(gameState.enemyHealth, gameState.playerHealth);
 
-    if (enemyHealth <= 0 && playerHealth <= 0) {
-      console.log(`Everyone perished on the battlefield`);
-      return;
+    if (gameState.enemyHealth <= 0 && gameState.playerHealth <= 0) {
+      console.log(styleText('yellow', `Everyone perished on the battlefield`));
+      return 'finished';
     }
-    if (enemyHealth <= 0) {
-      console.log(`Enemy defeated! You won the game`);
-      return;
+    if (gameState.enemyHealth <= 0) {
+      console.log(styleText('green', `Enemy defeated! You won the game`));
+      return 'finished';
     }
-    if (playerHealth <= 0) {
-      console.log(`YOU DIED!
+    if (gameState.playerHealth <= 0) {
+      console.log(styleText('red', `YOU DIED!
       ${wizardName} fell a hero's death...
-      `);
-      return;
+      `));
+      return 'finished';
     }
 
-    dropCooldowns(monsterCooldowns);
-    dropCooldowns(wizardCooldowns);
+    dropCooldowns(gameState.monsterCooldowns);
+    dropCooldowns(gameState.wizardCooldowns);
 
     moveSwitcher = moveSwitcher ? 0 : 1;
     continue;
   }
 }
 
-function monsterMove(): Move {
+function monsterMove(monsterCooldowns: Cooldowns): Move {
   while (true) {
     const randomNumberMoves = getRandomNumber(enemyAllMoves);
     const currentMonsterMove = monster.moves[randomNumberMoves];
@@ -92,25 +124,30 @@ function monsterMove(): Move {
   }
 }
 
-function wizardMove(): Move {
+function wizardMove(wizardCooldowns: Cooldowns): Move | 'quit' {
   while (true) {
     const availableWizardMoves = wizard.moves.map(elem => {
       return elem.name;
     });
+    
     const currentWizardMove = readlineSync.keyInSelect(
       availableWizardMoves,
-      `Which move will the Battle Mage choose?`
+      `Which move will the Battle Mage choose?`,
+      { cancel: 'Cancel and quit' }
     );
     if (currentWizardMove < 0) {
-      requireChooseMove();
+      if (readlineSync.keyInYN('Are you sure you want to quit?')) {
+        return 'quit';
+      }
       continue;
     }
+    
     if (wizardCooldowns[availableWizardMoves[currentWizardMove]] > 0) {
-      console.log(
+      console.log(styleText('bgMagenta',
         `${wizardName} hasn't recovered this move yet. Move will be available in ${
           wizardCooldowns[availableWizardMoves[currentWizardMove]]
         } turns`
-      );
+      ));
       continue;
     }
 
@@ -121,7 +158,7 @@ function wizardMove(): Move {
       }
     });
     if (readlineSync.keyInYN(`Confirm choice?`)) {
-      console.log(`YES`);
+      console.log(styleText('magenta', `...`));
       let result: Move | undefined;
       wizard.moves.forEach(elem => {
         if (elem.name === availableWizardMoves[currentWizardMove]) {

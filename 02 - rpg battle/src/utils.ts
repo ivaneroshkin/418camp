@@ -1,3 +1,4 @@
+import { styleText } from 'node:util';
 import { Move, Cooldowns } from './types';
 
 export const difficultyArray = ['Easy', 'Medium', 'Hard', 'Nightmare'];
@@ -51,26 +52,32 @@ export function dropCooldowns(cooldowns: Cooldowns): void {
 }
 
 export function displayMoveChars(obj: Move): void {
-  console.log(`
+  console.log(styleText('cyan', `
   Physical damage: ${obj.physicalDmg}
   Magic damage: ${obj.magicDmg}
   Physical armor: ${obj.physicArmorPercents}
   Magic armor: ${obj.magicArmorPercents}
   Turns to recover: ${obj.cooldown}
-`);
+`));
 }
 
 export function endRoundStats(enemyHealth: number, playerHealth: number): void {
-  console.log(`End of round!
+  console.log(styleText('blue', `End of round!
     Monster health: ${enemyHealth.toFixed(1)}
     Mage health: ${playerHealth.toFixed(1)}
-  `);
+  `));
 }
 
 export function requireChooseMove(): void {
-  console.log(`You must choose a move!`);
+  console.log(styleText('yellow', `You must choose a move!`));
 }
 
 export function sayAboutChoose(name: string, move: string): void {
-  console.log(`${name} chooses move: ${move.toLocaleUpperCase()}`);
+  const bgColor = name === 'Monster' ? 'bgRed' : 'bgGreen';
+  const fgColor = name === 'Monster' ? 'red' : 'green';
+  console.log(
+    styleText(['black', bgColor], name) + 
+    ' chooses move: ' + 
+    styleText(fgColor, move.toLocaleUpperCase())
+  );
 }
