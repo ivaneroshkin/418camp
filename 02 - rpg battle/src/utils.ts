@@ -61,11 +61,29 @@ export function displayMoveChars(obj: Move): void {
 `));
 }
 
-export function endRoundStats(enemyHealth: number, playerHealth: number): void {
-  console.log(styleText('blue', `End of round!
-    Monster health: ${enemyHealth.toFixed(1)}
-    Mage health: ${playerHealth.toFixed(1)}
-  `));
+function createHealthBar(current: number, max: number, name: string, color: 'red' | 'green'): string {
+  const percentage = Math.max(0, Math.min(100, (current / max) * 100));
+  const filledBlocks = Math.round((percentage / 100) * 10);
+  const emptyBlocks = 10 - filledBlocks;
+  
+  const bar = '█'.repeat(filledBlocks) + '░'.repeat(emptyBlocks);
+  const currentHP = Math.max(0, current).toFixed(1);
+  const maxHP = max.toFixed(1);
+  const coloredName = styleText(color, name.padEnd(8));
+  
+  return `${coloredName} [${bar}] ${percentage.toFixed(0)}% (${currentHP}/${maxHP} HP)`;
+}
+
+export function endRoundStats(
+  enemyHealth: number, 
+  playerHealth: number, 
+  enemyMaxHealth: number, 
+  playerMaxHealth: number
+): void {
+  console.log(styleText('blue', '\nEnd of round!\n'));
+  console.log(createHealthBar(enemyHealth, enemyMaxHealth, 'Monster:', 'red'));
+  console.log(createHealthBar(playerHealth, playerMaxHealth, 'Wizard:', 'green'));
+  console.log('');
 }
 
 export function requireChooseMove(): void {

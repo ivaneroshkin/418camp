@@ -16,6 +16,7 @@ import {
 } from './utils';
 import { Move, Cooldowns } from './types';
 import { titleScreen } from './titleScreen';
+import { displayRandomComment } from './comments';
 
 const nameMonster = `Monster`;
 const wizardName = `Eustace`;
@@ -50,7 +51,9 @@ async function keyInSelect(items: string[], prompt: string, options?: { cancel?:
 function resetGameState() {
   return {
     enemyHealth: monster.maxHealth,
+    enemyMaxHealth: monster.maxHealth,
     playerHealth: 0,
+    playerMaxHealth: 0,
     monsterCooldowns: {} as Cooldowns,
     wizardCooldowns: {} as Cooldowns
   };
@@ -80,14 +83,17 @@ async function playGame(): Promise<'quit' | 'finished'> {
   console.log(styleText('green', `Welcome to RPG Battle!`));
   const difficultyGame = await keyInSelect(
     difficultyArray,
-    `Choose game difficulty:`
+    `Choose game difficulty:`,
+    { cancel: 'Cancel' }
   );
   if (difficultyGame < 0) {
-    console.log(styleText('red', `There's no turning back...`));
+    console.log(styleText('red', `Hahaha! You're a coward! There's no turning back...`));
   }
   
   const gameState = resetGameState();
-  gameState.playerHealth = setLevel(difficultyArray[difficultyGame]);
+  const maxHealth = setLevel(difficultyArray[difficultyGame]);
+  gameState.playerHealth = maxHealth;
+  gameState.playerMaxHealth = maxHealth;
 
   let moveSwitcher = 0;
 
@@ -115,7 +121,8 @@ async function playGame(): Promise<'quit' | 'finished'> {
     gameState.enemyHealth = roundHealth(gameState.enemyHealth, roundMonsterMove, roundWizardMove);
     gameState.playerHealth = roundHealth(gameState.playerHealth, roundWizardMove, roundMonsterMove);
 
-    endRoundStats(gameState.enemyHealth, gameState.playerHealth);
+    endRoundStats(gameState.enemyHealth, gameState.playerHealth, gameState.enemyMaxHealth, gameState.playerMaxHealth);
+    displayRandomComment();
 
     if (gameState.enemyHealth <= 0 && gameState.playerHealth <= 0) {
       console.log(styleText('yellow', `Everyone perished on the battlefield`));
@@ -188,7 +195,7 @@ async function wizardMove(wizardCooldowns: Cooldowns): Promise<Move | 'quit'> {
       }
     });
     if (await keyInYN(`Confirm choice?`)) {
-      console.log(styleText('magenta', `...`));
+      console.log(` `);
       let result: Move | undefined;
       wizard.moves.forEach(elem => {
         if (elem.name === availableWizardMoves[currentWizardMove]) {
