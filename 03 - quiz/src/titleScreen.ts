@@ -9,13 +9,13 @@ const LOGO_ASCII = `
                               
     ╔═══════════════════════════════════════════╗
     ║   Answer 5 random questions correctly     ║
-    ║   Select your answer using number keys    ║
+    ║   Enter number to select • 'q' to quit   ║
     ╚═══════════════════════════════════════════╝
 `;
 
-const COLORS = ['green', 'yellow', 'blue', 'magenta'] as const;
+export const COLORS = ['green', 'yellow', 'blue', 'magenta'] as const;
 
-function getRandomColor(): typeof COLORS[number] {
+export function getRandomColor(): typeof COLORS[number] {
   return COLORS[Math.floor(Math.random() * COLORS.length)];
 }
 

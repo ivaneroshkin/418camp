@@ -30,11 +30,11 @@ export async function quiz(questions: Question[]): Promise<void> {
   displayFinalResult(correctCount, totalQuestions);
 }
 
-function getFiveRandomQuestions(array: Question[]): Question[] {
+export function getFiveRandomQuestions(array: Question[]): Question[] {
   return array.sort(() => Math.random() - 0.5).slice(0, 5);
 }
 
-async function askQuestions(questionsArray: Question[]): Promise<number> {
+export async function askQuestions(questionsArray: Question[]): Promise<number> {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -87,7 +87,7 @@ async function askQuestions(questionsArray: Question[]): Promise<number> {
   return counter;
 }
 
-function displayFinalResult(correctCount: number, totalQuestions: number): void {
+export function displayFinalResult(correctCount: number, totalQuestions: number): void {
   console.log('\n' + '='.repeat(50));
   
   if (correctCount === totalQuestions) {
