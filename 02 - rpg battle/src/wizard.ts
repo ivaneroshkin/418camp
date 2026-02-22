@@ -1,9 +1,9 @@
-// basic wizard config
+import { Character } from './types';
 
-let wizard = {
+export const wizard: Character = {
   moves: [
     {
-      name: 'Удар боевым кадилом',
+      name: 'Battle Censer Strike',
       physicalDmg: 2,
       magicDmg: 0,
       physicArmorPercents: 0,
@@ -11,7 +11,7 @@ let wizard = {
       cooldown: 0
     },
     {
-      name: 'Вертушка левой пяткой',
+      name: 'Left Heel Spin',
       physicalDmg: 4,
       magicDmg: 0,
       physicArmorPercents: 0,
@@ -19,7 +19,7 @@ let wizard = {
       cooldown: 4
     },
     {
-      name: 'Каноничный фаербол',
+      name: 'Canonical Fireball',
       physicalDmg: 0,
       magicDmg: 5,
       physicArmorPercents: 0,
@@ -27,7 +27,7 @@ let wizard = {
       cooldown: 3
     },
     {
-      name: 'Магический блок',
+      name: 'Magic Block',
       physicalDmg: 0,
       magicDmg: 0,
       physicArmorPercents: 100,
@@ -36,5 +36,3 @@ let wizard = {
     }
   ]
 };
-
-exports.wizard = wizard;

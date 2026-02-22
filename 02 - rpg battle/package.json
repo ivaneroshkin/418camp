@@ -1,15 +1,30 @@
 {
   "name": "rpg-battle",
-  "version": "1.0.0",
-  "description": "Боевой маг Евстафий сражается с лютым монстром. Монстр описывается таким объектом:",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "CLI game \"RPG Battle\"",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "ts-node index.ts",
+    "test": "jest --verbose --coverage"
   },
   "author": "@ivaneroshkin",
   "license": "ISC",
-  "dependencies": {
-    "readline-sync": "^1.4.10"
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.10.5",
+    "jest": "^30.0.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "overrides": {
+    "glob": "^13.0.0",
+    "minimatch": "^10.0.0",
+    "inflight": "npm:@humanfs/inflight@^1.0.0"
   }
 }

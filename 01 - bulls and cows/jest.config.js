@@ -22,5 +22,6 @@ export default {
     '!**/node_modules/**',
     '!**/dist/**',
     '!**/test/**',
+    '!src/readline.ts',
   ],
 };

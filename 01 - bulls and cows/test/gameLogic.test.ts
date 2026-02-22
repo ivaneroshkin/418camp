@@ -1,6 +1,6 @@
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import { attemptResult, getAttempt } from '../src/gameLogic.js';
-import readlineSync from 'readline-sync';
+import rl from '../src/readline.js';
 
 describe('gameLogic', () => {
   describe('attemptResult', () => {
@@ -58,8 +58,8 @@ describe('gameLogic', () => {
     let questionSpy: ReturnType<typeof jest.spyOn>;
 
     beforeEach(() => {
-      consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
-      questionSpy = jest.spyOn(readlineSync, 'question');
+      consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+      questionSpy = jest.spyOn(rl, 'question');
     });
 
     afterEach(() => {
@@ -67,32 +67,32 @@ describe('gameLogic', () => {
       questionSpy.mockRestore();
     });
 
-    it('should return valid input without duplicates', () => {
-      questionSpy.mockReturnValueOnce('1234');
+    it('should return valid input without duplicates', async () => {
+      questionSpy.mockResolvedValueOnce('1234');
       
-      const result = getAttempt(1, 4);
+      const result = await getAttempt(1, 4);
       
       expect(result).toEqual(['1', '2', '3', '4']);
       expect(consoleLogSpy).toHaveBeenCalledWith('Attempt number 1');
     });
 
-    it('should reject input with wrong length and retry', () => {
+    it('should reject input with wrong length and retry', async () => {
       questionSpy
-        .mockReturnValueOnce('12')
-        .mockReturnValueOnce('1234');
+        .mockResolvedValueOnce('12')
+        .mockResolvedValueOnce('1234');
       
-      const result = getAttempt(2, 4);
+      const result = await getAttempt(2, 4);
       
       expect(result).toEqual(['1', '2', '3', '4']);
       expect(consoleLogSpy).toHaveBeenCalledWith('Enter a number from 4 digits');
     });
 
-    it('should reject input with duplicates and retry', () => {
+    it('should reject input with duplicates and retry', async () => {
       questionSpy
-        .mockReturnValueOnce('1123')
-        .mockReturnValueOnce('1234');
+        .mockResolvedValueOnce('1123')
+        .mockResolvedValueOnce('1234');
       
-      const result = getAttempt(3, 4);
+      const result = await getAttempt(3, 4);
       
       expect(result).toEqual(['1', '2', '3', '4']);
       expect(consoleLogSpy).toHaveBeenCalledWith(expect.stringContaining('Digits must not be repeated!'));

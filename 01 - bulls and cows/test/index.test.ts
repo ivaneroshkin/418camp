@@ -1,14 +1,14 @@
 import { describe, it, expect, jest, beforeEach, afterEach } from '@jest/globals';
 import { startGame } from '../index.js';
-import readlineSync from 'readline-sync';
+import rl from '../src/readline.js';
 
 describe('startGame', () => {
   let consoleLogSpy: ReturnType<typeof jest.spyOn>;
   let questionSpy: ReturnType<typeof jest.spyOn>;
 
   beforeEach(() => {
-    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
-    questionSpy = jest.spyOn(readlineSync, 'question');
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    questionSpy = jest.spyOn(rl, 'question');
   });
 
   afterEach(() => {
@@ -16,13 +16,11 @@ describe('startGame', () => {
     questionSpy.mockRestore();
   });
 
-  it('should display welcome message', () => {
-    questionSpy.mockImplementationOnce(() => {
-      throw new Error('Exit test');
-    });
+  it('should display welcome message', async () => {
+    questionSpy.mockRejectedValueOnce(new Error('Exit test'));
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -30,16 +28,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject non-digit input with letters', () => {
+  it('should reject non-digit input with letters', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return 'abc';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -47,16 +45,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject difficulty less than 3', () => {
+  it('should reject difficulty less than 3', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '2';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -64,16 +62,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject difficulty equal to 0', () => {
+  it('should reject difficulty equal to 0', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '0';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -81,16 +79,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject difficulty greater than 6', () => {
+  it('should reject difficulty greater than 6', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '7';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -98,16 +96,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject input with decimal numbers', () => {
+  it('should reject input with decimal numbers', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '4.5';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -115,16 +113,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject input with spaces', () => {
+  it('should reject input with spaces', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '4 5';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -132,16 +130,16 @@ describe('startGame', () => {
     );
   });
 
-  it('should reject empty input', () => {
+  it('should reject empty input', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return '';
       throw new Error('Exit test');
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     expect(consoleLogSpy).toHaveBeenCalledWith(
@@ -149,9 +147,9 @@ describe('startGame', () => {
     );
   });
 
-  it('should handle multiple validation failures in sequence', () => {
+  it('should handle multiple validation failures in sequence', async () => {
     let callCount = 0;
-    questionSpy.mockImplementation(() => {
+    questionSpy.mockImplementation(async () => {
       callCount++;
       if (callCount === 1) return 'abc';
       if (callCount === 2) return '2';
@@ -161,7 +159,7 @@ describe('startGame', () => {
     });
 
     try {
-      startGame();
+      await startGame();
     } catch (e) {}
 
     const logCalls = consoleLogSpy.mock.calls.map(call => call[0]);
@@ -198,20 +196,20 @@ describe('startGame', () => {
   });
 
   describe('quit functionality', () => {
-    it('should exit gracefully when user types "q" at difficulty prompt', () => {
-      questionSpy.mockImplementationOnce(() => 'q');
+    it('should exit gracefully when user types "q" at difficulty prompt', async () => {
+      questionSpy.mockResolvedValueOnce('q');
 
-      startGame();
+      await startGame();
 
       expect(consoleLogSpy).toHaveBeenCalledWith(
         expect.stringContaining('Thanks for playing! Goodbye!')
       );
     });
 
-    it('should exit gracefully when user types "quit" at difficulty prompt', () => {
-      questionSpy.mockImplementationOnce(() => 'quit');
+    it('should exit gracefully when user types "quit" at difficulty prompt', async () => {
+      questionSpy.mockResolvedValueOnce('quit');
 
-      startGame();
+      await startGame();
 
       expect(consoleLogSpy).toHaveBeenCalledWith(
         expect.stringContaining('Thanks for playing! Goodbye!')

@@ -1,22 +1,22 @@
-# Проект 2. RPG баттл
+# Project 2. RPG Battle
 
-Боевой маг Евстафий сражается с лютым монстром. Монстр описывается таким объектом:
+Battle mage Eustace fights against a fierce monster. The monster is described by the following object:
 
 ```
 const monster = {
         maxHealth: 10,
-        name: "Лютый",
+        name: "Fierce",
         moves: [
             {
-                "name": "Удар когтистой лапой",
-                "physicalDmg": 3, // физический урон
-                "magicDmg": 0,    // магический урон
-                "physicArmorPercents": 20, // физическая броня
-                "magicArmorPercents": 20,  // магическая броня
-                "cooldown": 0     // ходов на восстановление
+                "name": "Clawed Paw Strike",
+                "physicalDmg": 3, // physical damage
+                "magicDmg": 0,    // magic damage
+                "physicArmorPercents": 20, // physical armor
+                "magicArmorPercents": 20,  // magic armor
+                "cooldown": 0     // turns to recover
             },
             {
-                "name": "Огненное дыхание",
+                "name": "Fire Breath",
                 "physicalDmg": 0,
                 "magicDmg": 4,
                 "physicArmorPercents": 0,
@@ -24,7 +24,7 @@ const monster = {
                 "cooldown": 3
             },
             {
-                "name": "Удар хвостом",
+                "name": "Tail Strike",
                 "physicalDmg": 2,
                 "magicDmg": 0,
                 "physicArmorPercents": 50,
@@ -35,12 +35,12 @@ const monster = {
     }
 ```
 
-Боевой маг Евстафий способен на следующее:
+Battle mage Eustace is capable of the following:
 
 ```
 moves: [
             {
-                "name": "Удар боевым кадилом",
+                "name": "Battle Censer Strike",
                 "physicalDmg": 2,
                 "magicDmg": 0,
                 "physicArmorPercents": 0,
@@ -48,7 +48,7 @@ moves: [
                 "cooldown": 0
             },
             {
-                "name": "Вертушка левой пяткой",
+                "name": "Left Heel Spin",
                 "physicalDmg": 4,
                 "magicDmg": 0,
                 "physicArmorPercents": 0,
@@ -56,7 +56,7 @@ moves: [
                 "cooldown": 4
             },
             {
-                "name": "Каноничный фаербол",
+                "name": "Canonical Fireball",
                 "physicalDmg": 0,
                 "magicDmg": 5,
                 "physicArmorPercents": 0,
@@ -64,7 +64,7 @@ moves: [
                 "cooldown": 3
             },
             {
-                "name": "Магический блок",
+                "name": "Magic Block",
                 "physicalDmg": 0,
                 "magicDmg": 0,
                 "physicArmorPercents": 100,
@@ -74,17 +74,17 @@ moves: [
         ]
 ```
 
-Бой идет по ходам. Каждый ход компьютер (Лютый) случайно выбирает одно из доступных действий и сообщает, что он собирается делать. В ответ на это игрок (Евстафий) должен выбрать свое действие.
+The battle proceeds in turns. Each turn the computer (Fierce) randomly selects one of the available actions and announces what it's going to do. In response, the player (Eustace) must choose their action.
 
-После происходит взаимное нанесение урона. Магическая броня блокирует магический урон, физическая броня блокирует физический урон.
+After that, mutual damage is dealt. Magic armor blocks magic damage, physical armor blocks physical damage.
 
-После совершения действия, оно не может быть повторно выбрано в течение cooldown ходов
+After performing an action, it cannot be selected again for the duration of its cooldown turns.
 
-Бой идет до победы одного из противников.
+The battle continues until one of the opponents is defeated.
 
-Перед началом боя игрок выбирает сложность (начальное здоровье Евстафия)
+Before the battle begins, the player chooses the difficulty (Eustace's starting health).
 
-## Запуск игры
+## Running the Game
 
 ```sh
 npm i
