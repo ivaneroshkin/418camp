@@ -71,7 +71,6 @@ function checkMoveResult(gameField) {
   return false;
 }
 
-
 module.exports = {
   getPlayer,
   getField,

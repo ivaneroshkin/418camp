@@ -1,0 +1,25 @@
+{
+  "name": "tic-tac-toe-2",
+  "version": "1.0.0",
+  "description": "Tic-Tac-Toe game with client and server",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "start:server": "npm start --prefix server",
+    "start:client": "npm start --prefix client",
+    "test": "npm test --prefix server"
+  },
+  "author": "@ivaneroshkin",
+  "license": "ISC",
+  "devDependencies": {
+    "lint-staged": "^15.2.11"
+  },
+  "lint-staged": {
+    "server/**/*.js": [
+      "npm run eslint --prefix server -- --fix"
+    ],
+    "client/**/*.{js,jsx}": [
+      "npm run lint --prefix client -- --fix"
+    ]
+  }
+}

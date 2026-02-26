@@ -18,3 +18,4 @@ echo "$changed_files" | grep -q "^01 - bulls and cows/" && run_lint_staged "01 -
 echo "$changed_files" | grep -q "^02 - rpg battle/" && run_lint_staged "02 - rpg battle"
 echo "$changed_files" | grep -q "^03 - quiz/" && run_lint_staged "03 - quiz"
 echo "$changed_files" | grep -q "^04 - tic tac toe/" && run_lint_staged "04 - tic tac toe"
+echo "$changed_files" | grep -q "^05 - tic tac toe 2/" && run_lint_staged "05 - tic tac toe 2"
