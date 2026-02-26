@@ -12,15 +12,15 @@ const app = require('../src/server');
 let lastField = [];
 let lastResult = {};
 
-Given('пустое поле', () => {
+Given('empty field', () => {
   controller.reset();
 });
 
-Given('ходит игрок {int}', (int) => {
+Given('player {int} moves', (int) => {
   controller.setCurrentPlayer(int);
 });
 
-Given('игрок ходит в клетку {int}, {int}', (x, y) => {
+Given('player moves to cell {int}, {int}', (x, y) => {
   x -= 1;
   y -= 1;
   lastField = controller.getField();
@@ -34,20 +34,20 @@ Given('игрок ходит в клетку {int}, {int}', (x, y) => {
   }
 });
 
-Then('поле становится {string}', (string) => {
+Then('field becomes {string}', (string) => {
   const result = controller.getField();
   assert.equal(controller.displayFieldAsString(result), string);
 });
 
-Given('поле {string}', (string) => {
+Given('field {string}', (string) => {
   controller.presetField(string);
 });
 
-Then('возвращается ошибка', () => {
+Then('error is returned', () => {
   logger.log('error');
 });
 
-Then('победил игрок {int}', (int) => {
+Then('player {int} wins', (int) => {
   lastField = controller.getField();
   const result = controller.checkMoveResult(lastField);
   if (result === true && result !== 'deadHeat') {
@@ -55,6 +55,6 @@ Then('победил игрок {int}', (int) => {
   }
 });
 
-Then('ничья', () => {
+Then('draw', () => {
   logger.log('deadHeat');
 });
