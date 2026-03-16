@@ -30,9 +30,7 @@ export function reset(): void {
 }
 
 export function presetField(newField: string): void {
-  field = newField
-    .split('|')
-    .map((el) => el.split('').map((string) => Number(string) as Player));
+  field = newField.split('|').map((el) => el.split('').map((string) => Number(string) as Player));
 }
 
 export function displayFieldAsString(array: GameField): string {

@@ -12,11 +12,16 @@
   "author": "@ivaneroshkin",
   "license": "ISC",
   "devDependencies": {
-    "lint-staged": "^15.2.11"
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.8.1"
   },
   "lint-staged": {
-    "server/**/*.{ts,js}": [
-      "npm run lint:fix --prefix server"
+    "server/**/*.ts": [
+      "npm run lint:fix --prefix server",
+      "prettier --write"
+    ],
+    "server/**/*.{json,md}": [
+      "prettier --write"
     ],
     "client/**/*.{js,jsx}": [
       "npm run lint --prefix client -- --fix"
