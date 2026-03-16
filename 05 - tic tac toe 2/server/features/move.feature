@@ -14,7 +14,7 @@ Feature: Tic-Tac-Toe
   Scenario: Player move to occupied cell
     Given field "100|200|102"
     And player 1 moves
-    When player moves to cell 1, 2
+    When player moves to occupied cell 1, 2
     Then error is returned
     And field becomes "100|200|102"
     When player moves to cell 2, 2

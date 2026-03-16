@@ -7,7 +7,7 @@ import { fieldUrl, moveUrl, winnerUrl, resetUrl } from './constants';
 
 function App() {
   const [field, setField] = useState([[0, 0, 0],[0, 0, 0],[0, 0, 0]]);
-  let [winner, setWinner] = useState('');
+  const [winner, setWinner] = useState('');
 
   const updateField = function() {
     axios.get(fieldUrl).then(res => {
@@ -28,7 +28,8 @@ function App() {
 
   useEffect(() => {
     updateField();
-    setInterval(updateField, 2000);
+    const id = setInterval(updateField, 2000);
+    return () => clearInterval(id);
   }, []);
 
   const showCell = function(value) {
@@ -39,13 +40,14 @@ function App() {
   const updateWinner = function() {
     axios.get(winnerUrl).then(res => {
       console.log(`winner from client`, res.data);
-      setWinner(winner = res.data)
+      setWinner(res.data.winner)
     })
   }
 
   useEffect(() => {
     updateWinner();
-    setInterval(updateWinner, 1000);
+    const id = setInterval(updateWinner, 1000);
+    return () => clearInterval(id);
   }, []);
 
   return (
@@ -53,8 +55,8 @@ function App() {
     <h1 className='main-title'>Hello! This is Tic-Tac-Toe game!</h1>
     <div className="app-center">
       <div className="field">
-        {field.map((row, y) => <div className="row">
-          {row.map((el, x) => <div className="cell" onClick={() => move(x, y)}>{showCell(el)}</div>)}
+        {field.map((row, y) => <div key={y} className="row">
+          {row.map((el, x) => <div key={x} className="cell" onClick={() => move(x, y)}>{showCell(el)}</div>)}
         </div>)}
       </div>
     </div>
