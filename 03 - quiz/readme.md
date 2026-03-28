@@ -13,11 +13,7 @@ Questions are stored in `questions.json` with the following structure:
       "id": 1,
       "question": "Question text here?",
       "correctAnswer": 2,
-      "answers": [
-        "Answer option 1",
-        "Answer option 2",
-        "Answer option 3"
-      ]
+      "answers": ["Answer option 1", "Answer option 2", "Answer option 3"]
     }
   ]
 }

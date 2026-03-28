@@ -7,7 +7,7 @@ import {
   displayMoveChars,
   endRoundStats,
   requireChooseMove,
-  sayAboutChoose
+  sayAboutChoose,
 } from '../src/utils';
 import { Move, Cooldowns } from '../src/types';
 
@@ -70,14 +70,14 @@ describe('Utils Module', () => {
       magicDmg: 0,
       physicArmorPercents: 0,
       magicArmorPercents: 0,
-      cooldown: 0
+      cooldown: 0,
     };
 
     it('should reduce health by physical damage with no armor', () => {
       const health = 100;
       const defender = { ...baseMove };
       const attacker = { ...baseMove, physicalDmg: 10 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(90);
     });
 
@@ -85,7 +85,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove };
       const attacker = { ...baseMove, magicDmg: 5 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(95);
     });
 
@@ -93,7 +93,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove, physicArmorPercents: 50 };
       const attacker = { ...baseMove, physicalDmg: 10 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(95);
     });
 
@@ -101,7 +101,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove, magicArmorPercents: 50 };
       const attacker = { ...baseMove, magicDmg: 10 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(95);
     });
 
@@ -109,7 +109,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove };
       const attacker = { ...baseMove, physicalDmg: 5, magicDmg: 3 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(92);
     });
 
@@ -117,7 +117,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove, physicArmorPercents: 50, magicArmorPercents: 50 };
       const attacker = { ...baseMove, physicalDmg: 10, magicDmg: 6 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(92);
     });
 
@@ -125,7 +125,7 @@ describe('Utils Module', () => {
       const health = 100;
       const defender = { ...baseMove, physicArmorPercents: 100, magicArmorPercents: 100 };
       const attacker = { ...baseMove, physicalDmg: 10, magicDmg: 10 };
-      
+
       expect(roundHealth(health, defender, attacker)).toBe(100);
     });
   });
@@ -133,13 +133,13 @@ describe('Utils Module', () => {
   describe('dropCooldowns', () => {
     it('should decrease all cooldowns by 1', () => {
       const cooldowns: Cooldowns = {
-        'Move1': 3,
-        'Move2': 2,
-        'Move3': 1
+        Move1: 3,
+        Move2: 2,
+        Move3: 1,
       };
-      
+
       dropCooldowns(cooldowns);
-      
+
       expect(cooldowns['Move1']).toBe(2);
       expect(cooldowns['Move2']).toBe(1);
       expect(cooldowns['Move3']).toBe(0);
@@ -147,19 +147,19 @@ describe('Utils Module', () => {
 
     it('should not decrease cooldowns below 0', () => {
       const cooldowns: Cooldowns = {
-        'Move1': 1,
-        'Move2': 0
+        Move1: 1,
+        Move2: 0,
       };
-      
+
       dropCooldowns(cooldowns);
-      
+
       expect(cooldowns['Move1']).toBe(0);
       expect(cooldowns['Move2']).toBe(0);
     });
 
     it('should handle empty cooldowns object', () => {
       const cooldowns: Cooldowns = {};
-      
+
       expect(() => dropCooldowns(cooldowns)).not.toThrow();
     });
   });
@@ -167,18 +167,18 @@ describe('Utils Module', () => {
   describe('displayMoveChars', () => {
     it('should log move characteristics without throwing', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       const move: Move = {
         name: 'Test Move',
         physicalDmg: 5,
         magicDmg: 3,
         physicArmorPercents: 20,
         magicArmorPercents: 10,
-        cooldown: 2
+        cooldown: 2,
       };
-      
+
       displayMoveChars(move);
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
@@ -187,27 +187,27 @@ describe('Utils Module', () => {
   describe('endRoundStats', () => {
     it('should display health bars without throwing', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       endRoundStats(8, 15, 10, 20);
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
 
     it('should handle zero health', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       endRoundStats(0, 0, 10, 20);
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
 
     it('should handle negative health', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       endRoundStats(-5, -3, 10, 20);
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
@@ -216,9 +216,9 @@ describe('Utils Module', () => {
   describe('requireChooseMove', () => {
     it('should log message without throwing', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       requireChooseMove();
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
@@ -227,18 +227,18 @@ describe('Utils Module', () => {
   describe('sayAboutChoose', () => {
     it('should log message for Monster', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       sayAboutChoose('Monster', 'Fire Breath');
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });
 
     it('should log message for Wizard', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-      
+
       sayAboutChoose('Wizard', 'Fireball');
-      
+
       expect(consoleSpy).toHaveBeenCalled();
       consoleSpy.mockRestore();
     });

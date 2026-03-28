@@ -1,6 +1,12 @@
 import * as fs from 'fs';
 import * as readline from 'node:readline/promises';
-import { loadQuestions, getFiveRandomQuestions, displayFinalResult, askQuestions, Question } from '../src/gameLogic';
+import {
+  loadQuestions,
+  getFiveRandomQuestions,
+  displayFinalResult,
+  askQuestions,
+  Question,
+} from '../src/gameLogic';
 
 jest.mock('fs');
 jest.mock('../src/titleScreen');
@@ -13,7 +19,7 @@ const mockQuestions: Question[] = [
   { id: 4, question: 'What is 5+5?', correctAnswer: 1, answers: ['10', '11', '9'] },
   { id: 5, question: 'What is 6+6?', correctAnswer: 2, answers: ['11', '12', '13'] },
   { id: 6, question: 'What is 7+7?', correctAnswer: 3, answers: ['13', '15', '14'] },
-  { id: 7, question: 'What is 8+8?', correctAnswer: 1, answers: ['16', '15', '17'] }
+  { id: 7, question: 'What is 8+8?', correctAnswer: 1, answers: ['16', '15', '17'] },
 ];
 
 describe('loadQuestions', () => {
@@ -73,17 +79,20 @@ describe('getFiveRandomQuestions', () => {
   it('should return questions from the original array', () => {
     const result = getFiveRandomQuestions([...mockQuestions]);
 
-    result.forEach(question => {
+    result.forEach((question) => {
       expect(mockQuestions).toContainEqual(question);
     });
   });
 
   it('should shuffle questions (randomness check)', () => {
     const results = new Set<string>();
-    
+
     for (let i = 0; i < 10; i++) {
       const result = getFiveRandomQuestions([...mockQuestions]);
-      const ids = result.map(q => q.id).sort().join(',');
+      const ids = result
+        .map((q) => q.id)
+        .sort()
+        .join(',');
       results.add(ids);
     }
 
@@ -148,12 +157,12 @@ describe('askQuestions', () => {
 
   beforeEach(() => {
     consoleLogSpy = jest.spyOn(console, 'log').mockImplementation();
-    
+
     mockRl = {
       question: jest.fn(),
-      close: jest.fn()
+      close: jest.fn(),
     };
-    
+
     (readline.createInterface as jest.Mock).mockReturnValue(mockRl);
   });
 
@@ -165,7 +174,7 @@ describe('askQuestions', () => {
   it('should return correct count when all answers are correct', async () => {
     const testQuestions: Question[] = [
       { id: 1, question: 'Test 1?', correctAnswer: 1, answers: ['A', 'B', 'C'] },
-      { id: 2, question: 'Test 2?', correctAnswer: 2, answers: ['X', 'Y', 'Z'] }
+      { id: 2, question: 'Test 2?', correctAnswer: 2, answers: ['X', 'Y', 'Z'] },
     ];
 
     mockRl.question.mockResolvedValueOnce('1').mockResolvedValueOnce('2');
@@ -179,7 +188,7 @@ describe('askQuestions', () => {
   it('should return correct count when some answers are wrong', async () => {
     const testQuestions: Question[] = [
       { id: 1, question: 'Test 1?', correctAnswer: 1, answers: ['A', 'B', 'C'] },
-      { id: 2, question: 'Test 2?', correctAnswer: 2, answers: ['X', 'Y', 'Z'] }
+      { id: 2, question: 'Test 2?', correctAnswer: 2, answers: ['X', 'Y', 'Z'] },
     ];
 
     mockRl.question.mockResolvedValueOnce('1').mockResolvedValueOnce('1');
@@ -193,7 +202,7 @@ describe('askQuestions', () => {
 
   it('should handle invalid input and give second chance', async () => {
     const testQuestions: Question[] = [
-      { id: 1, question: 'Test?', correctAnswer: 1, answers: ['A', 'B'] }
+      { id: 1, question: 'Test?', correctAnswer: 1, answers: ['A', 'B'] },
     ];
 
     mockRl.question.mockResolvedValueOnce('invalid').mockResolvedValueOnce('1');

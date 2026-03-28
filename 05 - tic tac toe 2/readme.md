@@ -1,32 +1,36 @@
-# Проект 5. Крестики-нолики 2
+# Project 5. Tic-Tac-Toe 2
 
-Крестики-нолики — логическая игра между двумя противниками на квадратном поле 3 на 3 клетки. Один из игроков играет «крестиками», второй — «ноликами».
+Tic-Tac-Toe is a logic game between two opponents on a 3x3 square field. One player plays with "crosses" (X), the other with "noughts" (O).
 
-Игроки по очереди ставят на свободные клетки поля 3х3 знаки (один всегда крестики, другой всегда нолики). Первый, выстроивший в ряд 3 своих фигуры по вертикали, горизонтали или диагонали, выигрывает. Первый ход делает игрок, ставящий крестики.
+Players take turns placing marks on the free cells of the 3x3 field (one always plays X, the other always plays O). The first player to align 3 of their marks vertically, horizontally, or diagonally wins. The player with crosses makes the first move.
 
-Обычно по завершении партии выигравшая сторона зачёркивает чертой свои три знака (нолика или крестика), составляющих сплошной ряд.
+Usually, after completing the game, the winning side draws a line through their three marks (noughts or crosses) that form a continuous row.
 
-## Запуск игры
+## Running the game
 
-1. запуск сервера:
+From the project root:
 
 ```sh
-cd server/
-npm i
-npm start
+npm run install:all
+npm run dev
 ```
 
-2. запуск клиента:
+This starts:
+
+- server in dev mode (`server` via `tsx watch`)
+- client in dev mode (`client` via Vite)
+
+## Running tests
+
+From the project root:
 
 ```sh
-cd client/
-npm i
-npm start
-```
-
-## Запуск тестов
-
-```sh
-cd server/
 npm test
+```
+
+Or run tests for each part separately:
+
+```sh
+npm run test:server
+npm run test:client
 ```

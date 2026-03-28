@@ -64,7 +64,7 @@ describe('utils', () => {
 
     it('should return digits between 0 and 9', () => {
       const result = getRandomNumber(6);
-      result.forEach(digit => {
+      result.forEach((digit) => {
         expect(digit).toBeGreaterThanOrEqual(0);
         expect(digit).toBeLessThanOrEqual(9);
       });

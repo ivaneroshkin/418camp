@@ -16,12 +16,12 @@ export async function bullsAndCows(numberLength: number): Promise<boolean> {
   while (true) {
     moves++;
     let attempt = await getAttempt(moves, numberLength);
-    
+
     if (attempt === null) {
       console.log(styleText(['yellow'], `Game ended. Thanks for playing!`));
       return false;
     }
-    
+
     let result = attemptResult(numberInGame, attempt);
 
     if (result.bulls == numberLength) {
@@ -52,16 +52,16 @@ export async function getAttempt(moves: number, numberLength: number): Promise<s
     console.log(`Attempt number ${moves}`);
     let attempt = await rl.question(`Enter a number (or 'q' to quit): `);
     const attemptString = String(attempt).trim();
-    
+
     if (attemptString.toLowerCase() === 'q' || attemptString.toLowerCase() === 'quit') {
       return null;
     }
-    
+
     if (!utils.isDigitsOnly(attemptString)) {
       console.log(styleText(['bgRed'], `Please enter digits only!`));
       continue;
     }
-    
+
     const attemptArray = attemptString.split('');
 
     if (attemptArray.length != numberLength) {

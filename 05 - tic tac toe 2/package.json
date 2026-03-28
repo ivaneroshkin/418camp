@@ -1,0 +1,46 @@
+{
+  "name": "tic-tac-toe-2",
+  "version": "1.0.0",
+  "description": "Tic-Tac-Toe game with client and server",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix client && npm install --prefix server",
+    "start": "concurrently \"npm:start:server\" \"npm:start:client\"",
+    "start:server": "npm start --prefix server",
+    "start:client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run start:dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build": "npm run build:server && npm run build:client",
+    "build:client": "npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "test": "npm test --prefix server && npm test --prefix client",
+    "test:server": "npm test --prefix server",
+    "test:client": "npm test --prefix client",
+    "lint": "npm run lint --prefix server && npm run lint --prefix client",
+    "format": "npm run format --prefix server && npm run format --prefix client"
+  },
+  "author": "@ivaneroshkin",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.8.1"
+  },
+  "lint-staged": {
+    "server/**/*.ts": [
+      "npm run lint:fix --prefix server",
+      "prettier --write"
+    ],
+    "server/**/*.{json,md}": [
+      "prettier --write"
+    ],
+    "client/**/*.{ts,tsx}": [
+      "npm run lint:fix --prefix client",
+      "prettier --write"
+    ],
+    "client/**/*.{json,md,scss}": [
+      "prettier --write"
+    ]
+  }
+}

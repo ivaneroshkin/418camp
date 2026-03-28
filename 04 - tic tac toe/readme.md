@@ -1,22 +1,52 @@
-# Проект 4. Крестики-нолики
+# Project 4. Tic-Tac-Toe
 
-Крестики-нолики — логическая игра между двумя противниками на квадратном поле 3 на 3 клетки. Один из игроков играет «крестиками», второй — «ноликами».
+Tic-Tac-Toe is a logic game between two opponents on a 3x3 square field. One player plays with "crosses", the other with "circles".
 
-Игроки по очереди ставят на свободные клетки поля 3х3 знаки (один всегда крестики, другой всегда нолики). Первый, выстроивший в ряд 3 своих фигуры по вертикали, горизонтали или диагонали, выигрывает. Первый ход делает игрок, ставящий крестики.
+Players take turns placing their marks (one always crosses, the other always circles) on free cells of the 3x3 field. The first player to line up 3 of their marks vertically, horizontally, or diagonally wins. The player placing crosses goes first.
 
-Обычно по завершении партии выигравшая сторона зачёркивает чертой свои три знака (нолика или крестика), составляющих сплошной ряд.
+Usually, when the game ends, the winning side draws a line through their three marks (circles or crosses) that form a continuous row.
 
-В данной версии игры вместо крестиков и ноликов используются «1» и «2», соответствующие порядку игроков.
+In this version of the game, instead of crosses and circles, "1" and "2" are used, corresponding to the player order.
 
-## Запуск игры
+## Requirements
+
+- Node.js >= 24.0.0
+
+## Installation
 
 ```sh
-npm i
+npm install
+```
+
+## Run the game
+
+```sh
 npm start
 ```
 
-## Запуск тестов
+For development mode with hot reload:
+
+```sh
+npm run dev
+```
+
+## Run tests
+
+Unit tests:
+
+```sh
+npm test
+```
+
+BDD tests with Cucumber:
 
 ```sh
 npm run cucumber
+```
+
+## Linting
+
+```sh
+npm run lint
+npm run lint:fix
 ```
