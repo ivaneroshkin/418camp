@@ -8,25 +8,29 @@ Usually, after completing the game, the winning side draws a line through their 
 
 ## Running the game
 
-1. Start the server:
+From the project root:
 
 ```sh
-cd server/
-npm i
-npm start
+npm run install:all
+npm run dev
 ```
 
-2. Start the client:
+This starts:
 
-```sh
-cd client/
-npm i
-npm start
-```
+- server in dev mode (`server` via `tsx watch`)
+- client in dev mode (`client` via Vite)
 
 ## Running tests
 
+From the project root:
+
 ```sh
-cd server/
 npm test
+```
+
+Or run tests for each part separately:
+
+```sh
+npm run test:server
+npm run test:client
 ```
