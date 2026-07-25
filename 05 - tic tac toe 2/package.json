@@ -23,7 +23,7 @@
   "author": "@ivaneroshkin",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^9.1.2",
+    "concurrently": "^9.2.4",
     "lint-staged": "^15.2.11",
     "prettier": "^3.8.1"
   },
